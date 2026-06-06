@@ -1,0 +1,367 @@
+ .per_ss { 
+   display: none; /* ❌❌❌ตัวข้อความในกล่องเส้นล่างของเก่า อยู่ในโค้ดหลังบ้าน blogger ปิดเลิกใช้งาน❌❌❌ */
+     } /* ❌❌ */
+
+
+   .jw-rightclick {
+     display: none !important;
+     }
+
+ .blogs { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง00🟢🟢*/
+      /*  background-color: #505e66;   /**/
+     }
+
+ .bc00 { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง00🟢🟢*/
+     margin-top: 20px; /******20px******ขอบด้านบน*************/
+     }
+ .bc01 { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง01🟢🟢*/
+  /*   margin-top: 0px; /************ขอบด้านบน*************/
+     }
+ .bc02 { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง02🟢🟢*/
+ /*    margin-top: 0px; /************ขอบด้านบน*************/
+     }
+ .bc03 { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง00🟢🟢*/
+   /*  margin-top: 0px; /************ขอบด้านบน*************/
+    /*  background-color: #505e66;   /**/
+     }
+ .bc04 { /*🟢🟢ใช้ขั้นระยะห่างเส้นล่าง00🟢🟢*/
+  /*   margin-top: 0px; /************ขอบด้านบน*************/
+     }  /*🔴🔴จบใช้ขั้นระยะห่างเส้นล่าง🔴🔴*/
+
+
+  /****************************************************************/
+
+/* เปลี่ยนสีชื่อบทความ */
+.post-title, .post-title a {
+    color: #90A4AE !important; /* เปลี่ยนรหัสสีตามต้องการ #FF5733 */
+}
+
+/* เปลี่ยนสีเมื่อเอาเมาส์ไปชี้ (Hover) */
+.post-title a:hover {
+    color: #C70039 !important;
+}
+
+  /****************************************************************/
+
+ #main-video { 
+   /* display: none; /**/
+     } /* ➰➰➰➰เครื่อง Player เล่นวีดีโอ➰➰➰➰ */
+
+
+ .daya1 { 
+   /* display: none; /**/
+     } /* ➰➰➰➰ปุ่มตอน➰➰➰➰ */
+
+/****************************************************************/
+
+ .มรสุมชีวิต { 
+    display: none; /**/
+     } /* ➰➰➰➰มรสุมชีวิต➰➰➰➰ */
+
+ .มรสุมชีวิตrumble-jwplayer { 
+   /* display: none; /**/
+     } /* ➰➰➰➰มรสุมชีวิตrumble-jwplayer➰➰➰➰ */
+
+ .ซ่อนปุ่ม { 
+   /* display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่ม➰➰➰➰ */
+
+ .ซ่อนปุ่มa-rumble-jwplayer {  /*a❌ที่ไม่ใด้เอาลิงค์ไปใส่*/
+    display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่มa-rumble-jwplayer➰➰➰➰ */
+
+ .ซ่อนปุ่มb-rumble-jwplayer {  /*b✅ที่เอาลิงค์ไปใส่*/
+    display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่มb-rumble-jwplayer➰➰➰➰ */
+
+
+ .mkv-rumble-jwplayer {  /*✅✅✅mkv*/
+   /* display: none; /**/
+     } /* ➰➰➰➰mkv-rumble-jwplayer➰➰➰➰ */
+
+
+.ซ่อน-rumble { 
+    display: none; /**/
+     } /* ➰➰➰➰ซ่อน-rumble➰➰➰➰ */
+
+ .ซ่อน-jwplayer { 
+   /* display: none; /**/
+     } /* ➰➰➰➰ซ่อน-jwplayer➰➰➰➰ */
+
+ .ซ่อนa-jwplayer {   /*a❌ที่ไม่ใด้เอาลิงค์ไปใส่*/
+    display: none; /**/
+     } /* ➰➰➰➰ซ่อนb-jwplayer➰➰➰➰ */
+
+ .ซ่อนb-jwplayer {   /*b✅ที่เอาลิงค์ไปใส่*/
+   /* display: none; /**/
+     } /* ➰➰➰➰ซ่อนb-jwplayer➰➰➰➰ */
+
+/**🟠Rumble🟠**/
+
+ .ซ่อนMP4-Rumble-jwplayer {   /*✅ปิดโชว์ปุ่มเลือกเครื่องเล่น jwplayer ที่เอาลิงค์ MP4 📌Rumble ไปใส่*/
+    display: none; /**/
+     } /* ➰➰➰➰ปิดโชว์ปุ่มเลือกเครื่องเล่น jwplayer ที่เอาลิงค์ MP4 📌Rumble ไปใส่➰➰➰➰ */
+
+/**🟠🟠🟠**/
+
+  /* *********** ส่วนของเครื่องเล่น seekstreaming *********************** */
+
+ .ซ่อนปุ่มc-rumble-jwplayer {  /*c✅ที่เอาลิงค์ SeekStreaming ไปใส่*/
+    display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่มc-rumble-jwplayer-SeekStreaming➰➰➰➰ */
+
+
+ .ซ่อนปุ่มv1-rumble-jwplayer {  /* ✅ที่เอาลิงค์ seekstreaming.com ไปใส่ */
+   /* display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่มv1-rumble-jwplayer+seekstreaming.com ➰➰➰➰ */
+
+
+ #v1 {  /* V1✅ที่เล่น video iframe */
+   /* display: none; /**/
+     } /* ➰➰➰➰ซ่อนปุ่มb-rumble-jwplayer➰➰➰➰ */
+
+ #video-v1 {  /* ปิดเปิดข้อความวิ่งบนเครื่องเล่น seekstreaming */
+   /* display: none; /**/
+     } /* 🟢🟢🟢🟢ข้อความวิ่งบนเครื่องเล่น seekstreaming🟢🟢🟢🟢 */
+
+
+  /****************************************************************/
+
+ .ช่องว่างtext { 
+      padding-top: 5px; /*******ปรับความกว้างกล่องด้านบน*********/
+     } /* 🟢🟢🟢🟢ช่องว่าง🟢🟢🟢🟢 */
+ .ช่องว่าง1 { 
+      padding-top: 0px; /*******ปรับความกว้างกล่องด้านบน*********/
+     } /* 🟢🟢🟢🟢ช่องว่าง1🟢🟢🟢🟢 */
+
+ .ช่องว่าง2 { 
+      padding-top: 0px; /*******ปรับความกว้างกล่องด้านบน*********/
+     } /* 🟢🟢🟢🟢ช่องว่าง2🟢🟢🟢🟢 */
+
+body {
+    background-color: black; /* */
+   /* background-image: url("https://cdn.pixabay.com/photo/2016/07/08/15/44/banner-1504653_1280.png");  /* */
+    }
+
+
+     div.a01 { /*🔴🔴ใช้ขั้นบทความข้างบนไมให้มาชนกับข้างล่าง🔴🔴*/
+     position: static;
+     border: -1px solid rgb(8, 8, 8);
+    } /*🔴*/
+    .acin  { /*🟢🟢🟢🟢เส้นบน🟢🟢🟢🟢เส้นบน🟢🟢🟢🟢เส้นบน🟢🟢🟢🟢*/
+      text-align: center;
+     /* font-family: Arial, sans-serif; /*******ฟอนต์ตัวหนังสือ*********/
+    }
+    .ersA1 {
+      border: 1px solid rgb(82, 82, 82);
+      padding-top: 0px; /*******ปรับความกว้างกล่องด้านบน*********/
+      margin-top: 0px; /********ระยะห่างขอบด้านบน*************/
+      padding-bottom: 0px; /*******ปรับความกว้างกล่องด้านล่าง*********/
+      margin-bottom: 0px; /******ระยะห่างขอบล่าง***********/ 
+      padding-right: 0px;
+      margin-right: 0px;
+      padding-left: 0px;
+      margin-left: 0px;
+      background-color: #; /*******สีพื้นหลังข้อความ*********/
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      position: relative; /* สำหรับตำแหน่งของข้อความ */
+      overflow: hidden; /* ป้องกัน scrollbar จากข้อความที่วิ่งเกิน */
+    }
+    @keyframes run-left-and-fader {
+    0% {
+      transform: translateX(0%);
+      opacity: 1;
+            }
+    99% {
+      transform: translateX(-100%);
+      opacity: 1;
+      visibility: visible;
+            }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+      visibility: hidden;
+            }
+        }
+    .beed1 {
+      font-size: 18px;
+      font-weight: bold;
+      color: white; /* #33CCFF สีข้อความขาว white */
+      padding-top: 5px; /*******ปรับความกว้างกล่องด้านบน 4px*********/
+      padding-bottom: 5px; /*******ปรับความกว้างกล่องด้านล่าง 4px*********/
+      animation: run-left-and-fader 50s linear 20 forwards; /* 28s ความเร็วของเดิม 12s ความเร็ว 2s ต่อรอบ, วน 10 รอบ, คงสถานะสุดท้าย */
+      white-space: nowrap;
+      overflow: hidden;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      display: inline-block; /* สำคัญสำหรับ transform 🔴ปิดได้ถ้าไม่มีข้อความ เพื่อให้เหลือเพียงเส้น */
+      padding-left: 100%; /* 🟢ทำให้ข้อความเริ่มต้นจากนอกจอทางขวา */      
+      }   /*🔴🔴🔴🔴🔴🔴🔴สิ้นสุดเส้นบน*/
+
+
+
+.btn_010 {  /*🟢🟢🟢🟢🟢🟢ปุ่มเลือกเครื่อเล่น*/
+    background-color: #28691b;
+    margin-top: 2px; /************ขอบด้านบน*************/
+    margin-bottom: 0px; /************ขอบล่าง*************/
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 2px 5px;
+        }
+.btn_010:hover {
+    color: #FFFFFF;
+    background: #6c757d;
+    border: 1px solid #FFFFFF;
+    box-shadow: 4px 4px 5px #CCCCCC;
+  } 
+    .btn_020 {
+    background-color: #a60303;
+    margin-top: 2px; /************ขอบด้านบน*************/
+    margin-bottom: 0px; /************ขอบล่าง*************/
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 2px 5px;
+        }
+.btn_020:hover {
+    color: #ff0000;
+    background: #6c757d;
+    border: 1px solid #FFFFFF;
+    box-shadow: 4px 4px 5px #CCCCCC;
+  } /*🔴🔴🔴🔴🔴🔴สิ้นสุดปุ่มเลือกเครื่อเล่น*/
+
+
+    /**🟢🟢🟢🟢🟢🟢ทำให้ปุ่มจัดวางอยู่แถวเดียว จัดระยะห่างปุ่มแถวเดียว**/
+  .Ae1 {
+   display: flex;
+   justify-content: flex-start; /* หรือจัดตำแหน่งอื่นๆ */    
+   }    
+.day01 {
+  margin-right: 5px; /* เพิ่มระยะห่างระหว่างปุ่ม */
+  /* หรือใช้ margin: 0 5px; เพื่อให้มีระยะห่างด้านข้าง */
+   }
+  /*🔴🔴🔴🔴🔴🔴🔴สิ้นสุดทำให้ปุ่มจัดวางอยู่แถวเดียว**/
+
+
+.bcin { /*🟢🟢🟢🟢เส้นล่าง🟢🟢🟢🟢เส้นล่าง🟢🟢🟢🟢เส้นล่าง🟢🟢🟢🟢*/
+      text-align: center;
+     /* font-family: Arial, sans-serif; /*******ฟอนต์ตัวหนังสือ*********/
+      overflow: hidden; /* ป้องกัน scrollbar จากข้อความที่วิ่งเกิน */
+    }
+    .perq {
+      border: 1px solid rgb(82, 82, 82);
+      padding-top: 0px; /*******ปรับความกว้างกล่องด้านบน*********/
+      margin-top: 0px; /********ระยะห่างขอบด้านบน*************/
+      padding-bottom: 0px; /*******ปรับความกว้างกล่องด้านล่าง*********/
+      margin-bottom: 0px; /******ระยะห่างขอบล่าง***********/ 
+      padding-right: 0px;
+      margin-right: 0px;
+      padding-left: 0px;
+      margin-left: 0px;
+      background-color: #; /*******สีพื้นหลังข้อความ*********/
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1); /*****เงาปุ่ม******/
+      position: relative; /* สำหรับตำแหน่งของข้อความ */  
+    }
+    @keyframes run-left-and-fader {
+    0% {
+      transform: translateX(0%);
+      opacity: 1;
+            }
+    99% {
+      transform: translateX(-100%);
+      opacity: 1;
+      visibility: visible;
+            }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+      visibility: hidden;
+            }
+        }
+    .deed1 {
+      font-size: 19px; /* ทำให้ข้อความใหญ่ขึ้น */
+    /*  font-weight: bold;  /**/
+      color: white; /* สีข้อความ */
+	  /*  ถ้ามีข้อความค่อยเปิดตรงจุดสัญลักษณ์นี้ ❓    */
+/*❓*/ /*     padding-top: 3px; /******🟠0*ปรับความกว้างกล่องด้านบน*********/
+/*❓*/ /*     padding-bottom: 3px; /****🟠0***ปรับความกว้างกล่องด้านล่าง*********/
+      animation: run-left-and-fader 30s linear 10 forwards; /*เดิม 60s 30s 10s  2s ต่อรอบ,เดิม 10 วน 10 รอบ, คงสถานะสุดท้าย */
+      white-space: nowrap;
+      overflow: hidden;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  /*❓*/ /*    display: inline-block; /* สำคัญสำหรับ transform 🔴ปิดได้ถ้าไม่มีข้อความ เพื่อให้เหลือเพียงเส้น */
+      padding-left: 100%; /* 🟢ทำให้ข้อความเริ่มต้นจากนอกจอทางขวา */      
+      }  /*🔴🔴🔴🔴🔴🔴🔴🔴🔴สิ้นสุดเส้นล่าง*/
+
+
+.btn_A1 {  /*🟢🟢🟢🟢🟢🟢🟢🟢ปุ่มเลีอกตอน*/
+    background-color: #672200;
+    margin-top: 5px; /************ขอบด้านบน*************/
+  /*  margin-bottom: 10px; /************ขอบล่าง*************/
+    color: white;
+    cursor: pointer;
+    border-radius: 10px; /**ปรับรูปทรงกล่อง**/
+    padding: 2px 5px;
+        }
+.btn_A1:hover {
+    color: #FFFFFF;
+    background: #e88307;
+    border: -1px solid #FFFFFF; /**ปรับตัวเลข+ขึ้นทำให้ปุ่มเคลื่อนไหว**/
+    box-shadow: 4px 4px 5px #CCCCCC; /*********เงาปุ่ม**********/
+  } 
+    .btn_A2 {
+    background-color: #e88307;
+    margin-top: 5px; /************ขอบด้านบน*************/
+    margin-bottom: 10px; /************ขอบล่าง*************/
+    color: white;
+    cursor: pointer;
+    border-radius: 10px; /**ปรับรูปทรงกล่อง**/
+    padding: 2px 5px;
+        }
+.btn_A2:hover {
+    color: #FFFFFF;
+    background: #672200;
+    border: -1px solid #FFFFFF; /**เงาสีชายแดนปุ่ม (+)จะทำให้ผมเคลื่อนไหว**/
+    box-shadow: 4px 4px 5px #CCCCCC; /*********เงาปุ่ม**********/
+  }  /*🔴🔴🔴🔴🔴🔴🔴สิ้นสุดปุ่มเลือกตอน*/
+
+
+
+    .myDiv {  /*🟢🟢🟢ตารางรอบปุ่มตอน*/
+      border: 1px outset #486285; /**เงาสีชายแดนปุ่ม อาจจะทำให้ผมเคลื่อนไหว**/
+      background-color: #28272e;
+      text-align: justify;
+      text-align-last: auto;
+    } /*🔴🔴🔴สิ้นสุดตารางรอบปุ่มตอน*/
+
+
+input.Button {  /*🟢🟢🟢🟢🟢🟢🟢กล่องตัวเลขปุ่ม*/
+      width: 83px;
+      padding: 8px 1px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 110%;
+      background: #282b2b;
+      color: #FFFFFF;
+      border: 2px solid #486285; /**เงาสีชายแดนปุ่ม อาจจะทำให้ผมเคลื่อนไหว**/
+      border-radius: 7px;
+     /* box-shadow: 4px 4px 5px #CCCCCC; /*********เงาปุ่ม**********/
+
+    }
+    input.Button:hover {
+      color: #FFFFFF;
+      background: #006633;
+      border: 1px solid #FFFFFF; /**เงาสีชายแดนปุ่ม อาจจะทำให้ผมเคลื่อนไหว**/
+     /* -moz-box-shadow: 4px 4px 5px #CCCCCC; /*/
+     /* -webkit-box-shadow: 4px 4px 5px #CCCCCC; /*/
+     /* box-shadow: 4px 4px 5px #CCCCCC; /*********เงาปุ่ม**********/
+    } /************🔴🔴🔴🔴🔴🔴สิ้นสุดกล่องตัวเลขปุ่ม********************************/   
+
+
+
+
+
+
+
