@@ -1,0 +1,34 @@
+
+    <source id="mp4" src="https://hugh.cdn.rumble.cloud/video/fww1/b0/s8/2/8/e/l/S/8elSz.aaa.mp4" type="video/mp4"> 
+
+     <source id="m3u" src="https://de077.github.io/Series/อสิธารา ชะตามังกร/Ep.01.m3u8" type="application/x-mpegURL"> 
+
+<script>
+    // เลือกแท็กวิดีโอหลักปิด m3u8
+    var video = document.getElementById("main-video");
+    var m3u8Source = document.getElementById("m3u8");
+
+    // คำสั่งปิด/ลบ m3u8 ชั่วคราว
+    if (m3u8Source) {
+        m3u8Source.remove(); // ลบ source m3u8 ออกจาก DOM
+        video.load();       // สั่งให้วิดีโอโหลด source ใหม่ที่เหลืออยู่ (.mp4)
+    }
+</script> 
+
+============================================================
+
+<script>
+// เลือกแท็กวิดีโอหลักปิด mp4
+var video = document.getElementById("main-video");
+var mp4Source = document.getElementById("mp4"); // เปลี่ยนมาจับตัว id="mp4"แทน
+
+// คำสั่งปิด/ลบ mp4 ชั่วคราว
+if (mp4Source) {
+    mp4Source.remove(); // ลบ source mp4 ออกไป
+    video.load();       // สั่งให้วิดีโอโหลดซอร์สใหม่ที่เหลืออยู่ (.m3u8)
+}
+</script>
+
+
+
+
