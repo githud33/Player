@@ -253,7 +253,7 @@
     } /*2*/
 
 
-  /*🔴️3*/ /*3*/
+  /*🔴️3*/ /*3
     .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-runnable-track{
         background-color: transparent !important;
     }
@@ -262,8 +262,22 @@
     }
     .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-ms-track{
         background-color: transparent !important;
-    }
+    } */
+	
+/*ข้างบนลบ👆ข้างล่าง👇เพิ่มใหม่ เพิ่มโค้ดใหม่แทนช่วงที่ 3*/
 
+/* เปลี่ยนเป็นให้ร่องรางสไลด์มีความกว้างและแสดงผลสีตามสไตล์ Plyr แทนการซ่อน */
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-runnable-track {
+    background-color: var(--plyr-video-control-bg-hover, rgba(255, 255, 255, 0.2)) !important;
+    height: 5px; /* กำหนดความหนาของเส้น */
+    border-radius: 3px;
+}
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-moz-range-track {
+    background-color: var(--plyr-video-control-bg-hover, rgba(255, 255, 255, 0.2)) !important;
+    height: 5px;
+    border-radius: 3px;
+}
+/*เพิ่มใหม่แทนช่วงที่ 👆3*/
 
     .plyr__progress input {
         background-color: transparent !important;
@@ -405,5 +419,7 @@
         padding-top: 50px;
     }  /*6*/
 
-
-
+/* บังคับให้แถบความคืบหน้าของ MP4 แสดงสีหลักตามระบบ */
+.plyr__progress input[type=range] {
+    color: var(--plyr-color-main, #ff0000) !important;
+}
