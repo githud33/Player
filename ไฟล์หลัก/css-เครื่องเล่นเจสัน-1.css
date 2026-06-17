@@ -204,14 +204,14 @@
         }
 
 
-    /*🤷‍♂️*/
-/*
+    /*🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️*/
+
     .plyr audio, .plyr iframe, .plyr video {
         max-height: 100vh;
     }
     .plyr__spacer {
         width: 100%;
-    } */
+    }  /*🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️*/
     .plyr__progress__container {
         position: absolute;
         top: 18px;  /*🤷‍♂️เส้นหนังของเก่า14*/
