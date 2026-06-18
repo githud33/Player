@@ -1,4 +1,3 @@
-<script>
     var video_start_time = 0;
     function setPlayerStartingPosition(player) {
         if (video_start_time > 0) {
@@ -230,4 +229,4 @@
             }
         }
     });
-</script>
+
