@@ -1,0 +1,189 @@
+/* =========================================================================
+   🎨 1. ส่วนตั้งค่าสี และฟอนต์พื้นฐาน (ตัวแปรหลัก)
+   ========================================================================= */
+:root {
+    --plyr-color-main: #ff0000;                     /* 🔴 สีหลักของเครื่องเล่น (แถบเวลา, ปุ่มที่กดเปิด) เปลี่ยนรหัสสีตรงนี้ได้เลย */
+    --plyr-video-background: transparent; 
+    --plyr-captions-background: rgba(0, 0, 0, 0.0); /* 🖤 พื้นหลังของซับไตเติล (ตอนนี้เป็น 0.0 คือโปร่งใสไม่มีกรอบดำ) */
+    --plyr-captions-text-color: #fff;               /* ⚪ สีตัวอักษรซับไตเติล (#fff = สีขาว) */
+    --plyr-font-weight-regular: 600;                /* ความหนาตัวอักษรทั่วไป (ยิ่งเลขมากยิ่งหนา) */
+    --plyr-font-weight-bold: 600;                   /* ความหนาตัวอักษรหนา */
+    --plyr-font-family: 'arial';                    /* รูปแบบฟอนต์ของเครื่องเล่น */
+    --plyr-font-size-xlarge: 30px; 
+}
+
+/* ห้ามคัดลอกหรือคลุมดำข้อความบนตัวเล่น (ช่วยป้องกันคนกดแช่บนจอมือถือแล้วขึ้นไฮไลต์) */
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* ลบแสงสีฟ้าตอนเอานิ้วจิ้มปุ่มบนมือถือ */
+}
+
+body, .container, video, .plyr--video {
+    width: 100%;
+    height: 100%;
+    font-family: 'arial', sans-serif;
+}
+
+
+/* =========================================================================
+   🎯 2. ส่วนปรับแต่งปุ่มควบคุม (ปุ่มเล่นตรงกลาง และการ Hover)
+   ========================================================================= */
+
+/* ปุ่ม Play สีแดงใหญ่อันกลางจอ */
+.plyr__control--overlaid {
+    background: #ff0000;                     /* เปลี่ยนสีปุ่มเพลย์ตรงกลางจอ */
+    box-shadow: #4a4a4a20 0 0 27px;
+}
+
+/* 🔵 สีตอนเอาเมาส์ไปชี้ (Hover) หรือปุ่มที่กำลังเปิดใช้งานอยู่ ของเดิมคือสีน้ำเงิน #0b50db */
+.plyr--video .plyr__control.plyr__tab-focus,
+.plyr--video .plyr__control:hover,
+.plyr--video .plyr__control[aria-expanded=true] {
+    background: #0b50db !important;          /* อยากให้เมาส์ชี้แล้วเป็นสีอะไร เปลี่ยนตรงนี้ครับ */
+}
+
+/* สีของปุ่มวงกลมในเมนูตั้งค่า/เลือกความละเอียด ตอนที่กดเลือกอยู่ */
+.plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]::before {
+    background: #ff0000;
+}
+
+/* ขีดเส้นใต้ปุ่มซับไตเติล CC ตอนที่เปิดใช้งาน */
+[data-plyr="captions"].plyr__control--pressed {
+    border-bottom: solid 3px #ff0000;
+}
+
+
+/* =========================================================================
+   🔤 3. ส่วนปรับขนาดตัวอักษร ซับไตเติล (Subtitle) ตามขนาดหน้าจอ
+   ========================================================================= */
+
+.plyr__captions { font-size: 22px; } /* ขนาดเริ่มต้น */
+
+@media (max-width: 479px) {
+    .plyr__captions { font-size: 20px; } /* 📱 มือถือจอเล็กมาก */
+}
+@media (min-width: 480px) {
+    .plyr__captions { font-size: 22px; transform: translateY(-15px) !important; } /* 📱 มือถือทั่วไป (ขยับระยะเยื้องขึ้นบนนิดนึง) */
+}
+@media (min-width: 768px) {
+    .plyr__captions { font-size: 30px; } /* 📑 แท็บเล็ต */
+}
+@media (min-width: 1024px) {
+    .plyr__captions { 
+        font-size: 28px !important; 
+        transform: translateY(-19px) !important; /* 💻 หน้าจอคอมพิวเตอร์ */
+    }
+    /* ตอนเปิดเต็มจอ (Fullscreen) บนคอมพิวเตอร์ */
+    .fullscreen .plyr__captions,
+    .plyr--fullscreen-active .plyr__captions {
+        margin-bottom: 8vh !important;       /* ดันซับขึ้นมาจากขอบล่างจอ (ยิ่งเลขเยอะยิ่งอยู่สูง) */
+        font-size: 45px !important;          /* ขนาดตัวอักษรซับตอนเต็มจอ */
+    }
+}
+
+/* 🖤 ใส่ขอบสีดำให้ตัวอักษรซับไตเติล เพื่อให้เบลนด์อ่านง่ายเวลาเจอพื้นหลังสีขาว */
+.plyr__captions span {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+
+
+/* =========================================================================
+   📈 4. ส่วนโครงสร้างแถบเวลา (Progress Bar) และการลาก
+   ========================================================================= */
+
+/* บังคับเส้นเวลาสีแดงตอนเล่นวิดีโอ */
+.plyr__progress progress::-webkit-progress-value { background: #ff0000 !important; border-radius: 0px !important; }
+.plyr__progress progress::-moz-progress-bar      { background: #ff0000 !important; border-radius: 0px !important; }
+
+/* เส้นบัฟเฟอร์สีเทาขาวที่วิ่งนำหน้าวิดีโอ */
+.plyr__progress__buffer {
+    background: rgba(255, 255, 255, 0.45) !important; 
+}
+
+/* แผ่นใสชั้นบนสุดที่ใช้รับการจิ้มลากนิ้ว (ห้ามลบเด็ดขาด ไม่งั้นลากเวลาเพี้ยน) */
+.plyr__progress input[type=range] {
+    height: 14px !important;                 /* ความหนาของพื้นที่ที่นิ้วจิ้มโดน (ถ้าลากยากให้เพิ่มเลขนี้) */
+    cursor: pointer !important;
+}
+
+
+/* =========================================================================
+   🔀 5. ส่วนจัดลำดับปุ่มควบคุม บรรทัดที่ 2 (เปลี่ยนเลข order เพื่อสลับตำแหน่งได้)
+   ========================================================================= */
+.plyr__controls {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important; 
+    align-items: center !important;
+    padding: 6px 15px 10px 15px !important; /* ช่องว่างขอบในแผงควบคุม (บน ขวา ล่าง ซ้าย) */
+}
+
+/* แถบเวลา: ล็อกให้สูงอยู่บรรทัดแรกสุดเสมอ */
+.plyr__controls > .plyr__progress__container { flex: 0 0 100% !important; width: 100% !important; order: 1 !important; }
+
+/* ลำดับปุ่มแถวที่ 2 (เลขน้อยอยู่ซ้าย เลขมากอยู่ขวา) */
+.plyr__controls > button[data-plyr="play"]                 { order: 2 !important; }
+.plyr__controls > .plyr__controls__item[data-plyr="rewind"] { order: 3 !important; margin-left: 12px !important; } /* margin-left คือระยะห่างจากปุ่มซ้ายมือ */
+.plyr__controls > .plyr__controls__item[data-plyr="fast-forward"] { order: 4 !important; margin-left: 12px !important; }
+.plyr__controls > .plyr__time--current                    { order: 5 !important; margin-left: 15px !important; }
+
+/* ตัวดันปุ่มขวา: ตัวนี้เป็นสเปเซอร์ช่วยผลักให้ปุ่มหลังจากนี้กระเด็นไปอยู่ฝั่งขวาสุด */
+.plyr__controls > .plyr__time--duration                   { order: 6 !important; flex-grow: 1 !important; text-align: left !important; margin-left: 5px !important; }
+
+/* กลุ่มปุ่มฝั่งขวา */
+.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* margin-right คือระยะห่างจากปุ่มขวามือ */
+.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; }
+.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; }
+.plyr__controls > button[data-plyr="fullscreen"]           { order: 10 !important; }
+
+/* 📐 ขนาดของไอคอนกรอกลับ - เดินหน้า 10 วินาที */
+.plyr__controls__item[data-plyr="rewind"] svg, 
+.plyr__controls__item[data-plyr="fast-forward"] svg {
+    height: 26px !important;                 /* ความสูงไอคอนกรอเวลาบนคอม */
+    width: 26px !important;                  /* ความกว้างไอคอนกรอเวลาบนคอม */
+}
+
+
+/* =========================================================================
+   📱 6. ส่วนบีบระยะห่างเฉพาะบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
+   ========================================================================= */
+@media (max-width: 600px) {
+    
+    /* บีบขอบแผงควบคุมบนมือถือให้แคบลงเพื่อเพิ่มพื้นที่แนวนอน */
+    .plyr__controls {
+        padding: 6px 8px 8px 8px !important;
+    }
+
+    /* 📏 ปรับระยะห่าง (Margin) ระหว่างปุ่มบนมือถือให้ชิดกันมากขึ้น (แก้ปัญหาปุ่มล้นจอ) */
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
+    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* ปรับขนาดฟอนต์ตัวเลขเวลาบนมือถือ */
+    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; }
+
+    /* 📐 ย่อขนาดไอคอนกรอกลับ-เดินหน้า 10 วิ ให้เล็กลงพอดีกับจอมือถือ */
+    .plyr__controls__item[data-plyr="rewind"] svg, 
+    .plyr__controls__item[data-plyr="fast-forward"] svg {
+        height: 20px !important;              /* ความสูงไอคอนบนมือถือ */
+        width: 20px !important;               /* ความกว้างไอคอนบนมือถือ */
+    }
+
+    /* บีบระยะห่างปุ่มฝั่งขวาบนมือถือ และจำกัดความกว้างของแถบลากเสียง */
+    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* max-width คือจำกัดความยาวของหลอดเสียงบนมือถือ */
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
+
+    /* 🔎 ปรับขนาดกล่องสัมผัส (Padding) ของทุกปุ่มบนมือถือให้ผอมลง เพื่อให้ยัดลงแถวเดียวกันได้พอดี */
+    .plyr__controls button, 
+    .plyr__controls .plyr__controls__item {
+        padding: 4px !important;             /* ยิ่งตัวเลขน้อย ปุ่มยิ่งชิดกันและผอมลง */
+    }
+}
+
+/* =========================================================================
+   🧹 ส่วนที่ลบออกไปแล้ว: โค้ด .wt-chart-active, .ct-series-a (โค้ดแต่งสีกราฟ Chartist) 
+   เพราะไม่จำเป็นต่อระบบเครื่องเล่นวิดีโอ ทำให้โค้ดสะอาดขึ้นเรียบร้อยครับ!
+   ========================================================================= */
