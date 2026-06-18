@@ -1,0 +1,475 @@
+/* =========================================================================
+   🔒 ส่วนที่ 1: ระบบล็อกความปลอดภัยและการแสดงผลพื้นฐาน
+   ========================================================================= */
+
+/* ป้องกันคนกดแช่บนจอมือถือแล้วขึ้นไฮไลต์ข้อความ และล้างแสงสีฟ้าตอนกดปุ่ม */
+* {
+    user-select: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+} 
+
+:root {
+    --plyr-color-main: #ff0000;                     /* 🔴 สีหลักของเครื่องเล่น (แถบเวลาและปุ่มเปิดใช้งาน) */
+    --plyr-video-background: transparent; 
+    --plyr-captions-background: rgba(0, 0, 0, 0.0); /* 🖤 พื้นหลังซับไตเติล (0.0 คือโปร่งใส ไม่มีกรอบดำซ้อน) */
+    --plyr-captions-text-color: #fff;               /* ⚪ สีตัวอักษรซับไตเติล */
+    --plyr-font-weight-regular: 600;                /* ความหนาของตัวอักษรทั่วไป */
+    --plyr-font-weight-bold: 600;                   /* ความหนาของตัวอักษรหนา */
+    --plyr-font-family: 'arial';                    /* รูปแบบฟอนต์หลัก */
+    --webkit-text-track-display: none;
+    --plyr-font-size-xlarge: 30px; 
+}
+
+body {
+    font-family: 'arial', sans-serif;
+}
+
+.container, video, .plyr--video {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================================================================
+   📺 ส่วนที่ 2: ตั้งค่าหน้าต่างโชว์ Chromecast และหน้าปก (Poster)
+   ========================================================================= */
+.plyr__chromecast-active {
+    display: block;
+    background: rgb(3,25,46);
+    background: linear-gradient(90deg, rgba(3,25,46,1) 0%, rgba(34,60,106,1) 61%, rgba(74,116,162,1) 100%);
+    background: url("data:image/svg+xml,%3Csvg width='316' height='316' viewBox='0 0 316 316' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M59.5625 59.5625C48.7048 59.5625 39.875 68.3923 39.875 79.25V118.625H59.5625V79.25H256.438V236.75H177.688V256.438H256.438C267.295 256.438 276.125 247.608 276.125 236.75V79.25C276.125 68.3923 267.295 59.5625 256.438 59.5625H59.5625ZM39.875 138.312V158C90.761 158 132.762 196.807 137.813 246.382C138.149 249.687 138.312 253.045 138.312 256.438H158C158 191.301 105.011 138.312 39.875 138.312ZM39.875 177.688V197.375C72.448 197.375 98.9375 223.865 98.9375 256.438H118.625C118.625 213.017 83.2958 177.688 39.875 177.688ZM39.875 217.062V256.438H79.25C79.25 234.693 61.6198 217.062 39.875 217.062Z' fill='url(%23paint0_linear_7418_3199)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_7418_3199' x1='100.387' y1='59.5625' x2='185.397' y2='268.719' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FFAF48'/%3E%3Cstop offset='1' stop-color='%23FF7854'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") 50% no-repeat, linear-gradient(90deg, rgba(3,25,46,1) 0%, rgba(34,60,106,1) 61%, rgba(74,116,162,1) 100%);
+    background-size: 100% 25%;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    transition: opacity .3s, visibility 0s;
+    visibility: visible;
+    width: 100%;
+    z-index: 2;
+}
+
+.chromecast-active-text {
+    left: 0;
+    margin: 0 2em;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 65%;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    font-weight: 400;
+}
+
+.plyr__poster {
+    background-size: cover;
+}
+
+
+/* =========================================================================
+   🎨 ส่วนที่ 3: ปุ่มควบคุม และการตั้งค่าสีสันต่างๆ
+   ========================================================================= */
+
+/* ปุ่มเล่นขนาดใหญ่สีแดงตรงกึ่งกลางจอ */
+.plyr__control--overlaid {
+    background: #ff0000;
+    box-shadow: #4a4a4a20 0 0 27px;
+}
+
+/* สีของปุ่มเมนูแถวล่างสุดตอนเอาเมาส์มาชี้ (Hover) หรือกดเปิดค้างไว้ */
+.plyr--video .plyr__control.plyr__tab-focus,
+.plyr--video .plyr__control:hover,
+.plyr--video .plyr__control[aria-expanded=true] {
+    background: #0b50db !important;          /* 🔵 ปรับสีตอนเมาส์ชี้ตรงนี้ (ปัจจุบันสีน้ำเงิน) */
+}
+
+.plyr__control.plyr__tab-focus {
+    box-shadow: 0 0 0 5px rgba(255,0,0, .5);
+}
+
+/* สีจุดวงกลมในเมนูเลือกความละเอียด/ความเร็ว ตอนกดเปิดใช้งานอยู่ */
+.plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]::before {
+    background: #ff0000;
+}
+
+/* ขีดเส้นใต้ปุ่มคำบรรยาย CC */
+[data-plyr="captions"].plyr__control {
+    border-bottom: solid 3px transparent;
+}
+[data-plyr="captions"].plyr__control--pressed {
+    border-bottom: solid 3px #ff0000;          /* เปลี่ยนสีขีดเส้นใต้ตอนเปิดซับตรงนี้ */
+}
+
+
+/* =========================================================================
+   🔤 ส่วนที่ 4: ขนาดและตำแหน่งคำบรรยาย (Subtitle) - [ฉบับเสถียรของพี่]
+   ========================================================================= */
+
+/* 1. ขนาดพื้นฐานสำหรับทุกอุปกรณ์ */
+.plyr__captions {
+    font-size: 22px;
+}
+
+/* 2. สำหรับมือถือหน้าจอเล็ก */
+@media (max-width: 479px) {
+    .plyr__captions {
+        font-size: 20px;                     /* ขนาดตัวอักษรซับจอเล็ก */
+        transform: translateY(0) !important;  /* ระยะระนาบมาตรฐาน */
+    }
+}
+    
+/* 3. มือถือทั่วไป (แนวตั้งปกติ) */
+@media (min-width: 480px) {
+    .plyr__captions {
+        font-size: 22px;                     /* ขนาดตัวอักษรซับมือถือทั่วไป */
+        transform: translateY(-15px) !important; /* ระยะเยื้องขึ้นด้านบน (ค่าลบ=ขยับขึ้น, ค่าบวก=ขยับลง) */
+    }
+}
+    
+/* 4. สำหรับแท็บเล็ตหน้าจอใหญ่ขึ้น */    
+@media (min-width: 768px) {
+    .plyr__captions {
+        font-size: 30px;                     /* ขนาดตัวอักษรซับบนแท็บเล็ต */
+    }
+}
+    
+/* 5. สำหรับหน้าจอคอมพิวเตอร์ (Laptop/Desktop) */
+@media (min-width: 1024px) {
+    /* ตั้งค่าพื้นฐานตอนเล่นจอปกติ (ไม่เต็มจอ) */
+    .plyr__captions {
+        font-size: 28px !important;          /* ขนาดตัวอักษรจอคอมปกติ */
+        transform: translateY(-19px) !important; /* ระยะเยื้องขึ้นบนคอมปกติ */
+    }
+
+    /* ตั้งค่าระดับความสูงและขนาดตอนเปิดโหมดเต็มจอ (Fullscreen) บนคอมพิวเตอร์ */
+    :fullscreen .plyr__captions,
+    .plyr--fullscreen-active .plyr__captions {
+        margin-bottom: 8vh !important;       /* ดันระยะขึ้นจากขอบล่างจอคอม (แก้จาก 11vh เหลือ 8vh ตามที่พี่ปรับไว้) */
+        font-size: 45px !important;          /* ขนาดฟอนต์ซับไตเติลตอนเต็มจอคอม */
+    }
+}
+
+/* 🖤 ใส่ขอบเงาสีดำหนา 2px รอบตัวอักษรซับไตเติล เพื่อให้อ่านง่ายคมชัดบนทุกพื้นหลัง */
+.plyr__captions span {
+    text-shadow: -2px -2px 0 #000, 
+                  2px -2px 0 #000, 
+                 -2px  2px 0 #000, 
+                  2px  2px 0 #000;
+}
+
+
+/* =========================================================================
+   🎞️ ส่วนที่ 5: เคลียร์พื้นที่ร่องแถบลากเวลา และบั๊กเบราว์เซอร์
+   ========================================================================= */
+
+/* ล้างขอบเหลี่ยมมนของแถบเวลาดั้งเดิม */
+.plyr__progress progress,
+.plyr__progress progress::-webkit-progress-bar,
+.plyr__progress progress::-webkit-progress-value {
+    border-radius: 0px !important; 
+}
+
+/* กล่องพรีวิวภาพขนาดย่อตอนเลื่อนแถวเวลา */
+.plyr__preview-thumb {
+    bottom: 22px;
+    transition: bottom ease 0.1s;
+}
+
+/* สั่งร่องแถบลากเวลาเดิมให้ใสสะอาด เพื่อหลีกเลี่ยงการเกยทับซ้อนกัน */
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-runnable-track,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-moz-range-track,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-ms-track {
+    background-color: transparent !important;
+}
+
+/* ล้างค่า Margin และ Padding แทร็กแบบเก่า */
+.plyr__progress input {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* คุมการซ่อน/แสดง ตุ่มกลมลากเวลา (จะโชว์ขึ้นมาเฉพาะตอนนิ้วจิ้มลากทำงานอยู่) */
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-thumb,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-moz-range-thumb,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]::-ms-thumb {
+    opacity: 0;
+    transition: opacity ease 0.1s;
+}
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-webkit-slider-thumb,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-moz-range-thumb,
+.plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-ms-thumb {
+    opacity: 1;
+}
+
+.plyr__menu__container {
+    z-index: 10;
+}
+
+/* ขยายขนาดปุ่มเพลย์ใหญ่กลางจอ และไอคอนควบคุมเมื่ออยู่บนจอละเอียดสูง */
+@media (min-width: 1280px) {
+    .plyr--full-ui.plyr--video .plyr__control--overlaid {
+        width: 60px;                         /* ความกว้างปุ่มเพลย์กลางจอคอมใหญ่ */
+        height: 60px;                        /* ความสูงปุ่มเพลย์กลางจอคอมใหญ่ */
+    }
+    .plyr__control svg {
+        height: 21px;                        /* ขนาดไอคอนเมนูแถวล่างบนจอใหญ่ */
+        width: 21px;
+    }
+}
+
+.plyr__control--overlaid svg {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ตแหน่งโลโก้แบรนด์เครื่องเล่นวิดีโอ */
+.plyr__control--logo {
+    height: auto;
+    max-height: 23.5px;
+    position: absolute;
+    left: 44%;
+    top: 37px;
+    margin-left: -50px;
+}
+
+.plyr__tooltip--drag {
+    opacity: 1;
+    transform: translate(-50%) scale(1);
+}
+
+.plyr--full-ui ::-webkit-media-text-track-container {
+    display: var(--webkit-text-track-display);
+}
+
+.disable-poster-transition .plyr__poster {
+    transition: none;
+} 
+
+/* ล็อกเลเยอร์แก้บั๊กเบราว์เซอร์ Safari ไม่แสดงภาพ Thumbnail บนวิดีโอ */
+.plyr__video-wrapper {
+    z-index: 0;
+} 
+
+/* จำกัดความสูงเมนูเลือกซับแนวตั้งไม่ให้ล้นทะลุขอบจอ โดยให้เลื่อนสกรอลล์เอาได้ */
+.plyr__menu__container > div {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/* ซ่อนตัวเว้นวรรค (Spacer) บนอุปกรณ์มือถือเพื่อประหยัดพื้นที่ */
+@media only screen and (max-width: 500px) {
+    .hide_mobile.plyr__spacer {
+        display: none
+    }
+}
+
+.plyr--is-ios .plyr__volume {
+    min-width: 32px;
+}
+
+/* ตั้งค่าความโปร่งใสของสถานะเชื่อมต่อ Chromecast */
+.chromecast-connected { opacity: 1; }
+.chromecast-disconnected { opacity: 0.5; }
+
+/* กล่องแสดงข้อความ Error ของระบบตัวเล่น */
+.error-message {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #ccc;
+    padding-top: 50px;
+}
+
+
+/* =========================================================================
+   🟢 ส่วนที่ 6: [ส่วนล็อกโครงสร้างแถบเวลาชั้นบนสุด - ฉบับจัดระเบียบห้ามลบ]
+   ========================================================================= */
+
+/* ตั้งค่าแผงควบคุมหลักแถวล่างสุดให้ขยายและตัดขึ้นบรรทัดใหม่ได้แบบเสถียร */
+.plyr__controls {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important; 
+    align-items: center !important;
+    padding: 6px 15px 10px 15px !important;  /* ช่องว่างขอบในแผง (บน ขวา ล่าง ซ้าย) */
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.88)) !important; /* เงาดำโปร่งแสงหลังแผงควบคุม */
+}
+
+/* 1. สั่งกล่องแถบเวลาจองพื้นที่บรรทัดแรกกว้าง 100% เต็มๆ ไม่โดนปุ่มด้านล่างมาแย่งพื้นที่ */
+.plyr__controls > .plyr__progress__container {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    flex: 0 0 100% !important; 
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 14px !important;                 /* ความหนาของพื้นที่สัมผัสลากเวลา ยิ่งเลขเยอะนิ้วยิ่งจิ้มลากง่าย */
+    margin: 0 0 8px 0 !important; 
+    padding: 0 !important;
+    order: 1 !important;                     /* ล็อกให้อยู่บรรทัดที่ 1 เสมอ */
+    z-index: 9 !important;
+}
+
+.plyr__progress {
+    height: 5px !important;                  /* ความหนาของเส้นหลอดเวลาจริง */
+    position: absolute !important;
+    top: 4px !important; 
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* แถบร่องพื้นหลังเส้นเวลา (ส่วนที่ยังเล่นไปไม่ถึง) */
+.plyr__progress progress {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: rgba(255, 255, 255, 0.25) !important; 
+    z-index: 1 !important;
+}
+
+/* 🎯 บังคับเรียกคืนเส้นเวลาวิ่งสีแดงเข้ม (Progress Value) ลากแล้วสีวิ่งตามนิ้วทันที */
+.plyr__progress progress::-webkit-progress-value { background: #ff0000 !important; border-radius: 0px !important; }
+.plyr__progress progress::-moz-progress-bar      { background: #ff0000 !important; border-radius: 0px !important; }
+
+/* 🎯 บังคับเรียกคืนเส้นบัฟเฟอร์โหลดล่วงหน้า สีขาวใส (Buffer Bar) */
+.plyr__progress__buffer {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 5px !important;
+    background: rgba(255, 255, 255, 0.45) !important; 
+    border-radius: 0px !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+}
+
+/* 🎯 แผ่นเลเยอร์ลากช่วงเวลาระบบสัมผัสชั้นบนสุด ป้องกันการลากเพี้ยน */
+.plyr__progress input[type=range] {
+    position: absolute !important;
+    top: -4px !important; 
+    left: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important; 
+    height: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    z-index: 10 !important;                  /* เลเยอร์สูงสุดของระบบแถวเวลาเพื่อให้รับนิ้วสัมผัสก่อนอันอื่น */
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+.plyr__progress__container + .plyr__progress__container,
+.plyr__pb, 
+.plyr__progress--seek {
+    display: block !important; 
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 5px !important;
+    pointer-events: none !important;         /* 🎯 จุดตาย: บังคับให้นิ้วทะลุผ่าน ไม่ให้ร่องเลเยอร์นี้มาแย่งสัมผัสการลากเวลา */
+    opacity: 1 !important;
+    margin: 0 !important;
+    z-index: 3 !important; 
+}
+
+.plyr__progress--seek {
+    background: transparent !important;
+}
+
+/* 2. จัดระเบียบลำดับเรียงแถวกลุ่มปุ่มบรรทัดที่ 2 (เปลี่ยนเลข order เพื่อสลับสับเปลี่ยนตำแหน่งซ้ายขวาได้) */
+.plyr__controls > button[data-plyr="play"]                 { order: 2 !important; } /* ปุ่มเล่น/หยุด */
+.plyr__controls > .plyr__controls__item[data-plyr="rewind"] { order: 3 !important; margin-left: 12px !important; } /* ปุ่มถอย 10 วิ */
+.plyr__controls > .plyr__controls__item[data-plyr="fast-forward"] { order: 4 !important; margin-left: 12px !important; } /* ปุ่มเดินหน้า 10 วิ */
+.plyr__controls > .plyr__time--current                    { order: 5 !important; margin-left: 15px !important; } /* ตัวเลขเวลาปัจจุบัน */
+
+/* 🎯 ใช้ช่องไฟปุ่ม Duration (เวลาที่เหลือ) ดันขยายเพื่อแยกกลุ่มปุ่มซ้ายและขวาออกจากกันอัตโนมัติ */
+.plyr__controls > .plyr__time--duration                   { 
+    order: 6 !important; 
+    flex-grow: 1 !important; 
+    text-align: left !important; 
+    margin-left: 5px !important; 
+}
+
+/* กลุ่มปุ่มฝั่งขวา */
+.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* หลอดปรับเสียง */
+.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; } /* ปุ่มเปิด/ปิดซับ */
+.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; } /* ปุ่มเฟืองความละเอียด */
+.plyr__controls > button[data-plyr="fullscreen"]           { order: 10 !important; } /* ปุ่มเปิดเต็มจอ */
+
+/* คุมการยืดขยายโครงสร้างปุ่มกรอเวลา 10 วินาที */
+.plyr__controls__item[data-plyr="rewind"], 
+.plyr__controls__item[data-plyr="fast-forward"] {
+    padding: 2px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+.plyr__controls__item[data-plyr="rewind"] svg, 
+.plyr__controls__item[data-plyr="fast-forward"] svg {
+    height: 26px !important;                 /* ความสูงไอคอนกรอเวลาบนคอม */
+    width: 26px !important;                  /* ความกว้างไอคอนกรอเวลาบนคอม */
+    pointer-events: none;
+}
+
+
+/* =========================================================================
+   📱 ส่วนที่ 7: ดักบีบระยะช่องไฟและขนาดไอคอนบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
+   ========================================================================= */
+@media (max-width: 600px) {
+    /* บีบขอบกล่องแผงควบคุมหลักบนมือถือให้ขยับชิดขึ้นเพื่อประหยัดพื้นที่แนวนอน */
+    .plyr__controls {
+        padding: 6px 8px 8px 8px !important;
+    }
+
+    /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง ป้องกันปุ่มล้นจอตกบรรทัด */
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
+    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* ย่อขนาดตัวอักษรบอกเวลาปัจจุบัน */
+    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* ย่อขนาดตัวอักษรบอกเวลาคงเหลือ */
+
+    /* 📐 ย่อขนาดสัดส่วนไอคอนปุ่มกรอกลับ-เดินหน้า 10 วินาที บนมือถือ */
+    .plyr__controls__item[data-plyr="rewind"] svg, 
+    .plyr__controls__item[data-plyr="fast-forward"] svg {
+        height: 20px !important;              /* ความสูงปุ่มกรอเวลามือถือ */
+        width: 20px !important;               /* ความกว้างปุ่มกรอเวลามือถือ */
+    }
+
+    /* บีบระยะห่างปุ่มกลุ่มฝั่งขวาบนมือถือ และจำกัดความยาวสูงสุดของหลอดลากเสียง */
+    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* max-width คือความยาวหลอดเสียงบนมือถือ */
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
+
+    /* 🔎 ลดขนาดกล่องรับสัมผัส (Padding) ด้านในของทุกๆ ปุ่มให้ผอมบางลง เพื่อให้เบียดอยู่ในแถวเดียวกันได้พอดี */
+    .plyr__controls button, 
+    .plyr__controls .plyr__controls__item {
+        padding: 4px !important;             /* ยิ่งตัวเลขน้อยลง ปุ่มยิ่งชิดและผอมลง เหมาะกับแก้ไขตอนปุ่มล้นจอ */
+    }
+}
+/* ========================================================================= */
