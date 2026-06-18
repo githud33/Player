@@ -1,0 +1,471 @@
+    * {
+        user-select: none; /* supported by Chrome and Opera */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }  /*🤷‍♂️สีป่มเมนูเสียง*/
+    :root {
+        --plyr-color-main: #ff0000;
+        --plyr-video-background: transparent; 
+        --plyr-captions-background: rgba(0, 0, 0, 0.0); /* <-----0, 0, 0, 0.30 กรอบสีดำโปร่งใส subtitle */
+        --plyr-captions-text-color: #fff;
+        --plyr-font-weight-regular: 600;  /* ความหนาอักษรของเดิม 600 */
+        --plyr-font-weight-bold: 600;  /* ของเดิม 600 */
+        
+        --plyr-font-family: 'arial'; 
+        
+        --webkit-text-track-display: none;
+        --plyr-font-size-xlarge: 30px;  /**/
+    }
+
+    body {
+     /* background-color: transparent;  /**/
+        
+          /* font-family: 'oswald', sans-serif; */
+            font-family: 'arial', sans-serif;
+        
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+    }
+
+    video {
+        width: 100%;
+        height: 100%;
+    }
+
+    .plyr__chromecast-active {
+        display: block;
+        background: rgb(3,25,46);
+        background: linear-gradient(90deg, rgba(3,25,46,1) 0%, rgba(34,60,106,1) 61%, rgba(74,116,162,1) 100%);
+        background: url("data:image/svg+xml,%3Csvg width='316' height='316' viewBox='0 0 316 316' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M59.5625 59.5625C48.7048 59.5625 39.875 68.3923 39.875 79.25V118.625H59.5625V79.25H256.438V236.75H177.688V256.438H256.438C267.295 256.438 276.125 247.608 276.125 236.75V79.25C276.125 68.3923 267.295 59.5625 256.438 59.5625H59.5625ZM39.875 138.312V158C90.761 158 132.762 196.807 137.813 246.382C138.149 249.687 138.312 253.045 138.312 256.438H158C158 191.301 105.011 138.312 39.875 138.312ZM39.875 177.688V197.375C72.448 197.375 98.9375 223.865 98.9375 256.438H118.625C118.625 213.017 83.2958 177.688 39.875 177.688ZM39.875 217.062V256.438H79.25C79.25 234.693 61.6198 217.062 39.875 217.062Z' fill='url(%23paint0_linear_7418_3199)'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_7418_3199' x1='100.387' y1='59.5625' x2='185.397' y2='268.719' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23FFAF48'/%3E%3Cstop offset='1' stop-color='%23FF7854'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") 50% no-repeat, linear-gradient(90deg, rgba(3,25,46,1) 0%, rgba(34,60,106,1) 61%, rgba(74,116,162,1) 100%);
+        background-size: 100% 25%;
+        height: 100%;
+        left: 0;
+        margin: 0;
+        opacity: 1;
+        position: absolute;
+        top: 0;
+        -webkit-transition: opacity .3s, visibility 0s;
+        transition: opacity .3s, visibility 0s;
+        visibility: visible;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .chromecast-active-text {
+        left: 0;
+        margin: 0 2em;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 65%;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #ffffff;
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+        font-weight: 400;
+    }
+
+    .plyr__poster {
+        background-size: cover;
+    }
+
+/*🤷‍♂️สีป่มเมนูปุ่มเล่นตรงกล่าง*/
+    .plyr__control--overlaid {
+        background: #ff0000;
+        box-shadow: #4a4a4a20 0 0 27px;
+    }
+
+    .plyr--video {
+        height: 100%;
+    }
+
+    /*🤷‍♂️สีป่มเมนูตอน Hover ของเดิมคือสีน้ำเงิน #0b50db */
+    .plyr--video .plyr__control.plyr__tab-focus,
+    .plyr--video .plyr__control:hover,
+    .plyr--video .plyr__control[aria-expanded=true] {
+        background: #0b50db !important;
+    }
+
+    .plyr__control.plyr__tab-focus {
+        box-shadow: 0 0 0 5px rgba(255,0,0, .5);
+    }
+
+/*🤷‍⚙สีเมนูเลือกคุณภาพ*/
+    .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]::before {
+        background: #ff0000;
+    }
+
+    [data-plyr="captions"].plyr__control {
+        border-bottom: solid 3px transparent;
+    }
+
+    [data-plyr="captions"].plyr__control--pressed {
+        border-bottom: solid 3px #ff0000;  /* #ff7755 */
+    }
+
+/*🤷‍♂️🔴ขนาดคำบรรยาย*/
+
+/* 1. ขนาดพื้นฐานสำหรับทุกอุปกรณ์ */
+.plyr__captions {
+    font-size: 22px;
+}
+
+/* 2. สำหรับมือถือหน้าจอเล็ก */
+@media (max-width: 479px) {
+    .plyr__captions {
+        font-size: 20px;  
+        transform: translateY(0) !important;  
+    }
+}
+    
+/* 3. มือถือทั่วไป (แนวตั้งปกติ) */
+@media (min-width: 480px) {
+    .plyr__captions {
+        font-size: 22px;  
+        transform: translateY(-15px) !important;
+    }
+}
+    
+/* 4. สำหรับแท็บเล็ตหน้าจอใหญ่ขึ้น */    
+@media (min-width: 768px) {
+    .plyr__captions {
+        font-size: 30px; 
+    }
+}
+    
+/* 5. สำหรับหน้าจอคอมพิวเตอร์ (Laptop/Desktop) */
+    @media (min-width: 1024px) {
+        .plyr__captions {
+            font-size: 28px !important;   
+            transform: translateY(-19px) !important;   
+        }
+
+        :fullscreen .plyr__captions,
+        .plyr--fullscreen-active .plyr__captions {
+            margin-bottom: 8vh !important; 
+            font-size: 45px !important;  
+        }
+    }
+
+/*🤷‍♂️🔴จบขนาดคำบรรยาย*/
+
+/*🤷‍♂️🔴ใส่ขอบสีดำให้กับคำบรรยาย subtitle*/
+.plyr__captions span {
+    text-shadow: -2px -2px 0 #000, 
+                  2px -2px 0 #000, 
+                 -2px  2px 0 #000, 
+                  2px  2px 0 #000;
+}
+/*🤷‍♂️🔴จบใส่ขอบสีดำให้กับคำบรรยาย subtitle*/
+
+    .plyr__progress progress {
+        border-radius: 0px !important;
+    }
+    .plyr__progress progress::-webkit-progress-bar {
+        border-radius: 0px !important; 
+    }
+    .plyr__progress progress::-webkit-progress-value {
+        border-radius: 0px !important; 
+    }
+
+    /*🔴️1*/ /*1*/
+    .wt-chart-active .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
+        fill: url(#gradient-active);
+    }
+    .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
+        fill: url(#gradient-a);
+    }
+    .ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+        stroke: #ff7755;
+    }  /*1*/   /***สี🎨***/
+
+    /*🔴️2*/ /*2*/
+    .plyr__preview-thumb {
+        bottom: 22px;
+        transition: bottom ease 0.1s;
+    }
+
+    /*🔴️3*/ /*3*/
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-runnable-track{
+        background-color: transparent !important;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-moz-range-track{
+        background-color: transparent !important;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-ms-track{
+        background-color: transparent !important;
+    }
+
+    /* ล้างค่าแทร็กแบบเก่าออกเพื่อให้ระบบเลเยอร์สิทธิ์สูงสุดด้านล่างทำงานแทนอย่างสมบูรณ์ */
+    .plyr__progress input {
+        margin: 0 !important;
+        padding: 0 !important;
+    }  /*3*/
+
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-webkit-slider-thumb {
+        opacity: 0;
+        transition: opacity ease 0.1s;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-moz-range-thumb {
+        opacity: 0;
+        transition: opacity ease 0.1s;
+    }  /*🔴️4*/ /*4*/
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]::-ms-thumb {
+        opacity: 0;
+        transition: opacity ease 0.1s;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-webkit-slider-thumb {
+        opacity: 1;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-moz-range-thumb {
+        opacity: 1;
+    }
+    .plyr--full-ui.plyr--video .plyr__progress input[type=range]:active::-ms-thumb {
+        opacity: 1;
+    }
+    .plyr__menu__container {
+        z-index: 10;
+    }
+    @media (min-width: 1280px) {
+        .plyr--full-ui.plyr--video .plyr__control--overlaid {
+            width: 60px;
+            height: 60px;
+        }
+        .plyr__control svg {
+            height: 21px;
+            width: 21px;
+        }
+    }
+    .plyr__control--overlaid svg {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .plyr__control--logo {
+        height: auto;
+        max-height: 23.5px;
+        position: absolute;
+        left: 44%;
+        top: 37px;
+        margin-left: -50px;
+    }
+    .plyr__tooltip--drag {
+        opacity: 1;
+        transform: translate(-50%) scale(1);
+    } /*4*/
+
+    .plyr--full-ui ::-webkit-media-text-track-container {
+        display: var(--webkit-text-track-display);
+    }
+
+    /*🔴️ที่ 5.2 ที่มีปัญหา5*/ /*5.1*/
+    .disable-poster-transition .plyr__poster {
+        transition: none;
+    } 
+
+    /*5.2*/
+    /*workaround to fix safari bug with not showing video thumbnail:*/
+    .plyr__video-wrapper {
+        z-index: 0;
+    }  /*5*/
+
+    /* fix for vertical subtitles scrolling */
+    .plyr__menu__container > div {
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+
+    /* Fix for controls overlapping on small devices */
+    @media only screen and (max-width: 500px) {
+        .hide_mobile.plyr__spacer {
+            display: none
+        }
+    }
+
+    /*🔴️ของเก่่าถึงตรงนี้ 6*/   
+    .plyr--is-ios .plyr__volume {
+        min-width: 32px;
+    }
+
+    /* Chromecast */
+    .chromecast-connected {
+        opacity: 1;
+    }
+
+    /* chromecast-disconnected */
+    .chromecast-disconnected {
+        opacity: 0.5;
+    }
+
+    .error-message {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        color: #ccc;
+        padding-top: 50px;
+    }  /*6*/
+
+
+    /* =========================================================================
+       🟢 [ส่วนล็อกโครงสร้างแถบเวลาชั้นบนสุด เพื่อแก้การลากเพี้ยน และคืนสีแดง+บัฟเฟอร์]
+       ========================================================================= */
+    
+    /* ตั้งค่าแผงควบคุมหลักให้ขึ้นบรรทัดใหม่ได้แบบเสถียร ปุ่มไม่ลอยหลุดไปบนสุด */
+    .plyr__controls {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important; 
+        align-items: center !important;
+        padding: 6px 15px 10px 15px !important;
+        background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.88)) !important;
+    }
+
+    /* 1. สั่งกล่องแถบเวลาจองพื้นที่บรรทัดแรกกว้าง 100% เต็มๆ ไม่โดนปุ่มด้านล่างมาเบียดหรือแย่งความกว้าง */
+    .plyr__controls > .plyr__progress__container {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        flex: 0 0 100% !important; 
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 14px !important; /* เพิ่มความกว้างของพื้นที่สัมผัสให้ใช้นิ้วจิ้มและลากติดมือได้ง่ายขึ้น */
+        margin: 0 0 8px 0 !important; 
+        padding: 0 !important;
+        order: 1 !important; 
+        z-index: 9 !important;
+    }
+
+    .plyr__progress {
+        height: 5px !important;
+        position: absolute !important;
+        top: 4px !important; /* จัดสมดุลของหลอดเวลาให้อยู่กึ่งกลางกล่องรับสัมผัส */
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    /* ตัวแถบพื้นหลังเส้นเวลา */
+    .plyr__progress progress {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 5px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        background: rgba(255, 255, 255, 0.25) !important; 
+        z-index: 1 !important;
+    }
+
+    /* 🎯 บังคับเรียกคืนเส้นเวลาสีแดงเข้ม (Progress Value) ลากแล้วสีวิ่งติดมือทันที */
+    .plyr__progress progress::-webkit-progress-value {
+        background: #ff0000 !important; 
+        border-radius: 0px !important;
+    }
+    .plyr__progress progress::-moz-progress-bar {
+        background: #ff0000 !important;
+        border-radius: 0px !important;
+    }
+
+    /* 🎯 บังคับเรียกคืนเส้นบัฟเฟอร์สีเทาขาว (Buffer) */
+    .plyr__progress__buffer {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 5px !important;
+        background: rgba(255, 255, 255, 0.45) !important; 
+        border-radius: 0px !important;
+        margin: 0 !important;
+        z-index: 2 !important;
+    }
+
+    /* 🎯 [จุดสำคัญ] ปลดล็อกปุ่มลากเบื้องหลัง ให้ขยายเต็มความกว้าง 100% เพื่อรับคำสั่งลากได้อย่างแม่นยำ ไม่เพี้ยน */
+    .plyr__progress input[type=range] {
+        position: absolute !important;
+        top: -4px !important; /* แผ่พื้นที่ควบคุมด้านบนและล่าง */
+        left: 0 !important;
+        width: 100% !important;
+        min-width: 100% !important; /* ป้องกันไม่ให้ปุ่มข้างล่างเบียดความกว้างจนแคบลง */
+        height: 14px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+        background: transparent !important;
+        z-index: 10 !important; /* อยู่ชั้นบนสุดของโครงสร้างหลอดเวลาเพื่อรับสัมผัสก่อนใคร */
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+
+/* 🟢 แก้ไขเพื่อความแม่นยำ: ปล่อยให้แสดงผลเพื่อเคลียร์ร่องแถบเวลา แต่ห้ามแย่งรับคำสั่งจิ้ม */
+    .plyr__progress__container + .plyr__progress__container,
+    .plyr__pb, 
+    .plyr__progress--seek {
+        display: block !important;       /* เปิดให้ระบบดึงค่าร่องเวลามาโชว์ได้ปกติ */
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 5px !important;
+        pointer-events: none !important; /* 🎯 จุดสำคัญ! ห้ามรับสัมผัส เมาส์/นิ้ว จะได้ทะลุไปลงที่แผ่น input หลักอย่างแม่นยำ */
+        opacity: 1 !important;
+        margin: 0 !important;
+        z-index: 3 !important;           /* อยู่ใต้ชั้น input[type=range] ที่มี z-index: 10 */
+    }
+
+    /* บังคับล้างสีพื้นหลังร่องเวลาที่ซ้อนกันให้เคลียร์ใส ไม่หนาทึบเกินไป */
+    .plyr__progress--seek {
+        background: transparent !important;
+    }
+
+    /* 2. จัดระเบียบกลุ่มปุ่มควบคุมทั้งหมดลงมาอยู่บรรทัดที่ 2 อย่างสวยงาม */
+    /* ปุ่มฝั่งซ้าย (เล่น, ถอยหลัง 10 วิ, เดินหน้า 10 วิ, เวลาปัจจุบัน) */
+    .plyr__controls > button[data-plyr="play"] { order: 2 !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"] { order: 3 !important; margin-left: 12px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"] { order: 4 !important; margin-left: 12px !important; }
+    .plyr__controls > .plyr__time--current { order: 5 !important; margin-left: 15px !important; }
+    
+    /* 🎯 ใช้ Duration (เวลาคงเหลือ) ดันขยายเพื่อแยกกลุ่มปุ่มซ้ายและกลุ่มปุ่มขวาออกจากกัน */
+    .plyr__controls > .plyr__time--duration { 
+        order: 6 !important; 
+        flex-grow: 1 !important; 
+        text-align: left !important; 
+        margin-left: 5px !important;
+    }
+    
+    /* ปุ่มฝั่งขวา (ระดับเสียง, ซับไตเติล, เมนูตั้งค่า, เต็มจอ) */
+    .plyr__controls > .plyr__volume { order: 7 !important; margin-right: 12px !important; }
+    .plyr__controls > button[data-plyr="captions"] { order: 8 !important; margin-right: 12px !important; }
+    .plyr__controls > .plyr__menu { order: 9 !important; margin-right: 12px !important; }
+    .plyr__controls > button[data-plyr="fullscreen"] { order: 10 !important; }
+
+    /* ควบคุมสัดส่วนบล็อกไอคอน เดินหน้า-ถอยหลัง 10 วินาทีให้ทำงานเสถียร */
+    .plyr__controls__item[data-plyr="rewind"], 
+    .plyr__controls__item[data-plyr="fast-forward"] {
+        padding: 2px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+    .plyr__controls__item[data-plyr="rewind"] svg, 
+    .plyr__controls__item[data-plyr="fast-forward"] svg {
+        height: 26px !important; 
+        width: 26px !important;
+        pointer-events: none;
+    }
+    /* ========================================================================= */
