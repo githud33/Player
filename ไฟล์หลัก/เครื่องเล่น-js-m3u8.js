@@ -182,7 +182,7 @@ function setPlayerStartingPosition(player) {
         iconUrl: 'https://assets.mediadelivery.net/plyr/3.7.3.2/plyr.svg',
         captions: { active: false, language: '', update: true },
         controls: [
-          "play-large", "play", "rewind", "fast-forward", "progress", "current-time", "duration", "mute", "volume", "captions", "settings", /*"pip",*/ "airplay", "fullscreen","audioTrack" /*,"chromecast" */
+          "play-large", "play", "rewind", "fast-forward", "progress", "current-time", "duration", "mute", "volume", "captions", "settings", "pip", "airplay", "fullscreen","audioTrack" /*,"chromecast" */
         ],
         settings: ['captions', 'quality', 'speed', 'loop', 'audioTrack'],
         speed: {
