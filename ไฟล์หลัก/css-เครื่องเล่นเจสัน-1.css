@@ -1,5 +1,6 @@
 /* =========================================================================
-    css-เครื่องเล่นปรับปรุง18-6-69.03.css
+    https://github.com/githud33/copy/blob/main/css-เครื่องเล่นปรับปรุง20-6-69.v6.css 
+   css-เครื่องเล่นปรับปรุง20-6-69.v6.css
 🔒 ส่วนที่ 1: ระบบล็อกความปลอดภัยและการแสดงผลพื้นฐาน
    ========================================================================= */
 
@@ -14,13 +15,13 @@
 } 
 
 :root {
-    --plyr-color-main: #ff0000;                     /* 🔴 สีหลักของเครื่องเล่น (แถบเวลาและปุ่มเปิดใช้งาน) */
+    --plyr-color-main: #ff0000;                     /* 🔴 👈 [ปรับสีหลัก] แถบเวลาสีแดงและสีปุ่มตอนเปิดใช้งาน */
     --plyr-video-background: transparent; 
-    --plyr-captions-background: rgba(0, 0, 0, 0.0); /* 🖤 พื้นหลังซับไตเติล (0.0 คือโปร่งใส ไม่มีกรอบดำซ้อน) */
-    --plyr-captions-text-color: #fff;               /* ⚪ สีตัวอักษรซับไตเติล */
-    --plyr-font-weight-regular: 600;                /* ความหนาของตัวอักษรทั่วไป */
-    --plyr-font-weight-bold: 600;                   /* ความหนาของตัวอักษรหนา */
-    --plyr-font-family: 'arial';                    /* รูปแบบฟอนต์หลัก */
+    --plyr-captions-background: rgba(0, 0, 0, 0.0); /* 🖤 👈 [ปรับพื้นหลังซับ] 0.0 คือโปร่งใส ไม่มีกรอบดำขอบซับ */
+    --plyr-captions-text-color: #fff;               /* ⚪ 👈 [ปรับสีอักษรซับ] มาตรฐานคือสีขาว */
+    --plyr-font-weight-regular: 600;                /* 👈 ความหนาของตัวอักษรซับไตเติลทั่วไป */
+    --plyr-font-weight-bold: 600;                   /* 👈 ความหนาของตัวอักษรซับตัวหนา */
+    --plyr-font-family: 'arial';                    /* 👈 รูปแบบฟอนต์หลักของเครื่องเล่น */
     --webkit-text-track-display: none;
     --plyr-font-size-xlarge: 30px; 
 }
@@ -83,7 +84,7 @@ body {
 
 /* ปุ่มเล่นขนาดใหญ่สีแดงตรงกึ่งกลางจอ */
 .plyr__control--overlaid {
-    background: #ff0000;
+    background: #ff0000;                     /* 🔴 👈 [ปรับสีปุ่มเพลย์กลางจอ] เปลี่ยนโค้ดสีตรงนี้ได้เลย */
     box-shadow: #4a4a4a20 0 0 27px;
 }
 
@@ -91,7 +92,7 @@ body {
 .plyr--video .plyr__control.plyr__tab-focus,
 .plyr--video .plyr__control:hover,
 .plyr--video .plyr__control[aria-expanded=true] {
-    background: #0b50db !important;          /* 🔵 ปรับสีตอนเมาส์ชี้ตรงนี้ (ปัจจุบันสีน้ำเงิน) */
+    background: #0b50db !important;          /* 🔵 👈 [ปรับสี Hover ปุ่ม] ตอนเมาส์ชี้ปุ่มเมนูด้านล่าง (ปัจจุบันสีน้ำเงิน) */
 }
 
 .plyr__control.plyr__tab-focus {
@@ -100,7 +101,7 @@ body {
 
 /* สีจุดวงกลมในเมนูเลือกความละเอียด/ความเร็ว ตอนกดเปิดใช้งานอยู่ */
 .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]::before {
-    background: #ff0000;
+    background: #ff0000;                     /* 🔴 👈 [ปรับสีจุดวิทยุ] สีจุดกลมเลือกความเร็ว/ความละเอียดในเฟือง */
 }
 
 /* ขีดเส้นใต้ปุ่มคำบรรยาย CC */
@@ -108,39 +109,39 @@ body {
     border-bottom: solid 3px transparent;
 }
 [data-plyr="captions"].plyr__control--pressed {
-    border-bottom: solid 3px #ff0000;          /* เปลี่ยนสีขีดเส้นใต้ตอนเปิดซับตรงนี้ */
+    border-bottom: solid 3px #ff0000;          /* 🔴 👈 [ปรับสีขีดใต้ปุ่ม CC] สีเส้นใต้ตอนกดเปิดซับคำบรรยาย */
 }
 
 
 /* =========================================================================
-   🔤 ส่วนที่ 4: ขนาดและตำแหน่งคำบรรยาย (Subtitle) - [ฉบับเสถียรของพี่]
+   🔤 ส่วนที่ 4: ขนาดและตำแหน่งคำบรรยาย (Subtitle) - [คู่มือปรับระยะความสูง-ใหญ่จอ]
    ========================================================================= */
 
 /* 1. ขนาดพื้นฐานสำหรับทุกอุปกรณ์ */
 .plyr__captions {
-    font-size: 22px;
+    font-size: 22px;                         /* 👈 ขนาดตัวอักษรซับไตเติลเริ่มต้น */
 }
 
-/* 2. สำหรับมือถือหน้าจอเล็ก */
+/* 2. สำหรับมือถือหน้าจอเล็กสุดๆ */
 @media (max-width: 479px) {
     .plyr__captions {
-        font-size: 20px;                     /* ขนาดตัวอักษรซับจอเล็ก */
-        transform: translateY(0) !important;  /* ระยะระนาบมาตรฐาน */
+        font-size: 20px;                     /* 👈 ขนาดซับจอเล็กมาก */
+        transform: translateY(0) !important;  
     }
 }
     
 /* 3. มือถือทั่วไป (แนวตั้งปกติ) */
 @media (min-width: 480px) {
     .plyr__captions {
-        font-size: 22px;                     /* ขนาดตัวอักษรซับมือถือทั่วไป */
-        transform: translateY(-15px) !important; /* ระยะเยื้องขึ้นด้านบน (ค่าลบ=ขยับขึ้น, ค่าบวก=ขยับลง) */
+        font-size: 22px;                     /* 👈 ขนาดซับบนมือถือแนวตั้งปกติ */
+        transform: translateY(-15px) !important; /* 📐 👈 [ขยับซับมือถือ] ค่าลบ=ขยับขึ้นบน, ค่าบวก=ขยับลงล่าง */
     }
 }
     
 /* 4. สำหรับแท็บเล็ตหน้าจอใหญ่ขึ้น */    
 @media (min-width: 768px) {
     .plyr__captions {
-        font-size: 30px;                     /* ขนาดตัวอักษรซับบนแท็บเล็ต */
+        font-size: 30px;                     /* 👈 ขนาดซับบน iPad / แท็บเล็ต */
     }
 }
     
@@ -148,15 +149,15 @@ body {
 @media (min-width: 1024px) {
     /* ตั้งค่าพื้นฐานตอนเล่นจอปกติ (ไม่เต็มจอ) */
     .plyr__captions {
-        font-size: 28px !important;          /* ขนาดตัวอักษรจอคอมปกติ */
-        transform: translateY(-19px) !important; /* ระยะเยื้องขึ้นบนคอมปกติ */
+        font-size: 28px !important;          /* 👈 ขนาดซับบนหน้าจอคอมพิวเตอร์ปกติ */
+        transform: translateY(-19px) !important; /* 📐 👈 [ขยับซับจอคอมปกติ] ค่าลบ=ดันซับลอยหลบแถวเวลา */
     }
 
     /* ตั้งค่าระดับความสูงและขนาดตอนเปิดโหมดเต็มจอ (Fullscreen) บนคอมพิวเตอร์ */
     :fullscreen .plyr__captions,
     .plyr--fullscreen-active .plyr__captions {
-        margin-bottom: 8vh !important;       /* ดันระยะขึ้นจากขอบล่างจอคอม (แก้จาก 11vh เหลือ 8vh ตามที่พี่ปรับไว้) */
-        font-size: 45px !important;          /* ขนาดฟอนต์ซับไตเติลตอนเต็มจอคอม */
+        margin-bottom: 8vh !important;       /* 📐 👈 [ขยับซับโหมดเต็มจอคอม] ดันระยะขึ้นจากขอบล่างจอ (ยิ่งเลขเยอะยิ่งลอยสูง) */
+        font-size: 45px !important;          /* 👈 ขนาดฟอนต์ซับไตเติลตอนเปิดเต็มจอคอม */
     }
 }
 
@@ -165,7 +166,7 @@ body {
     text-shadow: -2px -2px 0 #000, 
                   2px -2px 0 #000, 
                  -2px  2px 0 #000, 
-                  2px  2px 0 #000;
+                  2px  2px 0 #000;           /* 👈 ปรับแต่งความหนา/ทิศทางเงาขอบตัวหนังสือซับ */
 }
 
 
@@ -182,7 +183,7 @@ body {
 
 /* กล่องพรีวิวภาพขนาดย่อตอนเลื่อนแถวเวลา */
 .plyr__preview-thumb {
-    bottom: 22px;
+    bottom: 22px;                            /* 👈 ระยะลอยของภาพ Thumbnail พรีวิวเวลาเอานิ้วลาก/เมาส์ชี้ */
     transition: bottom ease 0.1s;
 }
 
@@ -219,12 +220,14 @@ body {
 /* ขยายขนาดปุ่มเพลย์ใหญ่กลางจอ และไอคอนควบคุมเมื่ออยู่บนจอละเอียดสูง */
 @media (min-width: 1280px) {
     .plyr--full-ui.plyr--video .plyr__control--overlaid {
-        width: 60px;                         /* ความกว้างปุ่มเพลย์กลางจอคอมใหญ่ */
-        height: 60px;                        /* ความสูงปุ่มเพลย์กลางจอคอมใหญ่ */
+        width: 60px !important;              /* 👈 ความกว้างปุ่มเพลย์ใหญ่กลางจอ */
+        height: 60px !important;             /* 👈 ความสูงปุ่มเพลย์ใหญ่กลางจอ */
     }
-    .plyr__control svg {
-        height: 21px;                        /* ขนาดไอคอนเมนูแถวล่างบนจอใหญ่ */
-        width: 21px;
+    
+    /* 🎯 เจาะลึกถึงตัวไอคอน SVG ทุกปุ่มในแผงควบคุมด้านล่าง เพื่อให้ปรับขนาดได้ดั่งใจ */
+    .plyr__controls .plyr__control svg {
+        height: 24px !important;             /* 👈 🎯 ขนาดไอคอนเมนูแถวล่างสุดบนจอคอมพิวเตอร์ (ปัจจุบันเคาะไว้ที่ 24px กำลังสวย) */
+        width: 24px !important;              
     }
 }
 
@@ -263,7 +266,7 @@ body {
 
 /* จำกัดความสูงเมนูเลือกซับแนวตั้งไม่ให้ล้นทะลุขอบจอ โดยให้เลื่อนสกรอลล์เอาได้ */
 .plyr__menu__container > div {
-    max-height: 50vh;
+    max-height: 50vh;                        /* 👈 จำกัดความสูงแผงเฟืองเลือกความเร็ว/ซับไตเติลไม่ให้ล้นจอ */
     overflow-y: auto;
 }
 
@@ -300,7 +303,9 @@ body {
 
 
 /* =========================================================================
-   🟢 ส่วนที่ 6: [ส่วนล็อกโครงสร้างแถบเวลาชั้นบนสุด - ฉบับจัดระเบียบห้ามลบ]
+   🟢 ส่วนที่ 6: [ส่วนล็อกโครงสร้างแถบเวลาชั้นบนสุด - ฉบับเรียวบางคุมที่เดียวจบ]
+   📌 คู่มือปรับแต่ง: หากในอนาคตต้องการเปลี่ยนความหนาหลอดเวลา (เช่น จาก 5px ไป 10px)
+                     ให้เปลี่ยนเลขค่าความหนาในท่อนนี้ให้ตรงกันทั้ง 3 จุดย่อยครับ
    ========================================================================= */
 
 /* ตั้งค่าแผงควบคุมหลักแถวล่างสุดให้ขยายและตัดขึ้นบรรทัดใหม่ได้แบบเสถียร */
@@ -309,8 +314,8 @@ body {
     flex-direction: row !important;
     flex-wrap: wrap !important; 
     align-items: center !important;
-    padding: 6px 15px 10px 15px !important;  /* ช่องว่างขอบในแผง (บน ขวา ล่าง ซ้าย) */
-    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.88)) !important; /* เงาดำโปร่งแสงหลังแผงควบคุม */
+    padding: 6px 15px 10px 15px !important;  /* 🎯 👈 [ปรับความสูงแผงควบคุมหนีขอบจอ] เลขตัวที่สาม (10px) คือช่องไฟขอบล่างสุด ยิ่งเพิ่มเลข แผงควบคุมยิ่งลอยสูงหนีขอบจอขึ้นมาครับ */
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.88)) !important; 
 }
 
 /* 1. สั่งกล่องแถบเวลาจองพื้นที่บรรทัดแรกกว้าง 100% เต็มๆ ไม่โดนปุ่มด้านล่างมาแย่งพื้นที่ */
@@ -321,15 +326,16 @@ body {
     flex: 0 0 100% !important; 
     width: 100% !important;
     max-width: 100% !important;
-    height: 14px !important;                 /* ความหนาของพื้นที่สัมผัสลากเวลา ยิ่งเลขเยอะนิ้วยิ่งจิ้มลากง่าย */
+    height: 14px !important;                 /* 👈 [ความสูงแผ่นรับสัมผัสลากเวลา] ยิ่งเยอะนิ้วยิ่งจิ้มโดนง่าย */
     margin: 0 0 8px 0 !important; 
     padding: 0 !important;
-    order: 1 !important;                     /* ล็อกให้อยู่บรรทัดที่ 1 เสมอ */
+    order: 1 !important;                     
     z-index: 9 !important;
 }
 
+/* ตัวคลุมแถบหลอดเวลาทั้งหมด */
 .plyr__progress {
-    height: 5px !important;                  /* ความหนาของเส้นหลอดเวลาจริง */
+    height: 5px !important;                   /* 🎯 👈 [จุดปรับความหนา 1] ความหนาร่องรอยรวมเทา/บัฟเฟอร์ (ปัจจุบันบางเรียว 5px) */
     position: absolute !important;
     top: 4px !important; 
     width: 100% !important;
@@ -342,48 +348,74 @@ body {
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 5px !important;
+    height: inherit !important;              /* 🎯 ดึงความหนาอัตโนมัติจากตัวแม่ด้านบน */
     margin: 0 !important;
     padding: 0 !important;
     -webkit-appearance: none !important;
     appearance: none !important;
-    background: rgba(255, 255, 255, 0.25) !important; 
+    background: rgba(255, 255, 255, 0.25) !important; /* 👈 สีร่องรอยเวลาส่วนที่วิดีโอยังเล่นไปไม่ถึง (ขาวใส 25%) */
     z-index: 1 !important;
 }
 
-/* 🎯 บังคับเรียกคืนเส้นเวลาวิ่งสีแดงเข้ม (Progress Value) ลากแล้วสีวิ่งตามนิ้วทันที */
-.plyr__progress progress::-webkit-progress-value { background: #ff0000 !important; border-radius: 0px !important; }
-.plyr__progress progress::-moz-progress-bar      { background: #ff0000 !important; border-radius: 0px !important; }
-
-/* 🎯 บังคับเรียกคืนเส้นบัฟเฟอร์โหลดล่วงหน้า สีขาวใส (Buffer Bar) */
+/* ⚪ ส่วนเส้นบัฟเฟอร์โหลดล่วงหน้า: สีขาวโปร่งแสงแยกเลเยอร์ชัดเจน */
 .plyr__progress__buffer {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 5px !important;
-    background: rgba(255, 255, 255, 0.45) !important; 
+    height: inherit !important;              /* 🎯 ดึงความหนาอัตโนมัติจากตัวแม่ด้านบน */
+    -webkit-appearance: none !important;  
+    appearance: none !important;
+    background: transparent !important;
+    border: none !important;
     border-radius: 0px !important;
     margin: 0 !important;
     z-index: 2 !important;
 }
 
-/* 🎯 แผ่นเลเยอร์ลากช่วงเวลาระบบสัมผัสชั้นบนสุด ป้องกันการลากเพี้ยน */
+/* ย้อมสีเนื้อในบัฟเฟอร์ */
+.plyr__progress progress.plyr__progress__buffer::-webkit-progress-value { 
+    background: rgba(255, 255, 255, 0.45) !important;     /* ⚪ 👈 [ปรับสีบัฟเฟอร์ Chrome] สีขาวใสเข้ม 45% */
+    border-radius: 0px !important; 
+}
+.plyr__progress progress.plyr__progress__buffer::-moz-progress-bar { 
+    background: rgba(255, 255, 255, 0.45) !important;     /* ⚪ 👈 [ปรับสีบัฟเฟอร์ Firefox] สีขาวใสเข้ม 45% */
+    border-radius: 0px !important; 
+}
+.plyr__progress progress.plyr__progress__buffer::-webkit-progress-bar { 
+    background: transparent !important;   
+}
+
+/* แผ่นเลเยอร์ลากช่วงเวลาระบบสัมผัสชั้นบนสุด ป้องกันการลากเพี้ยน */
 .plyr__progress input[type=range] {
     position: absolute !important;
-    top: -4px !important; 
+    top: -3.5px !important;                  /* 🎯 👈 [ปรับระนาบแผ่นลากเส้นสีแดง ขึ้น-ลง] คุมตำแหน่งเซนเตอร์ของเส้นแดงวิ่งตามนิ้ว (ค่าลบเยอะ=ขยับขึ้นบน / ค่าลบน้อยหรือค่าบวก=ขยับลงล่าง) */
     left: 0 !important;
     width: 100% !important;
     min-width: 100% !important; 
-    height: 14px !important;
+    height: 12px !important;                 
     margin: 0 !important;
     padding: 0 !important;
     cursor: pointer !important;
     opacity: 1 !important;
     background: transparent !important;
-    z-index: 10 !important;                  /* เลเยอร์สูงสุดของระบบแถวเวลาเพื่อให้รับนิ้วสัมผัสก่อนอันอื่น */
+    z-index: 10 !important;                  
     -webkit-appearance: none !important;
     appearance: none !important;
+}
+
+/* 🚨 บังคับล็อกความหนา "เส้นสีแดงวิ่งตามนิ้ว" ให้หนาเรียบขนานกริบ */
+.plyr__progress input[type=range]::-webkit-slider-runnable-track {
+    background: transparent !important;
+    background-image: linear-gradient(var(--plyr-color-main, var(--plyr-video-control-color, #00b3ff)) 100%, transparent 100%) !important;
+    background-size: var(--value, 0%) 5px !important; /* 🎯 👈 [จุดปรับความหนา 2] ล็อกความหนาเส้นแดงฝั่ง Chrome ให้หนา 5px */
+    background-repeat: no-repeat !important;
+}
+
+/* สำหรับระบบ Firefox */
+.plyr__progress input[type=range]::-moz-range-track {
+    background: transparent !important;
+    height: 5px !important;                          /* 🎯 👈 [จุดปรับความหนา 3] ล็อกความหนาเส้นแดงฝั่ง Firefox ให้หนา 5px */
 }
 
 .plyr__progress__container + .plyr__progress__container,
@@ -394,8 +426,8 @@ body {
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 5px !important;
-    pointer-events: none !important;         /* 🎯 จุดตาย: บังคับให้นิ้วทะลุผ่าน ไม่ให้ร่องเลเยอร์นี้มาแย่งสัมผัสการลากเวลา */
+    height: inherit !important;              
+    pointer-events: none !important;         
     opacity: 1 !important;
     margin: 0 !important;
     z-index: 3 !important; 
@@ -405,13 +437,13 @@ body {
     background: transparent !important;
 }
 
-/* 2. จัดระเบียบลำดับเรียงแถวกลุ่มปุ่มบรรทัดที่ 2 (เปลี่ยนเลข order เพื่อสลับสับเปลี่ยนตำแหน่งซ้ายขวาได้) */
+/* 2. 🔢 👈 [จัดระเบียบลำดับปุ่มแถวล่างสุด] พี่สามารถเปลี่ยนเลข order เพื่อสลับตำแหน่ง ซ้าย-ขวา ของปุ่มได้เลยครับ */
 .plyr__controls > button[data-plyr="play"]                 { order: 2 !important; } /* ปุ่มเล่น/หยุด */
-.plyr__controls > .plyr__controls__item[data-plyr="rewind"] { order: 3 !important; margin-left: 12px !important; } /* ปุ่มถอย 10 วิ */
+.plyr__controls > .plyr__controls__item[data-plyr="rewind"] { order: 3 !important; margin-left: 12px !important; } /* ปุ่มถอยหลัง 10 วิ */
 .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"] { order: 4 !important; margin-left: 12px !important; } /* ปุ่มเดินหน้า 10 วิ */
-.plyr__controls > .plyr__time--current                    { order: 5 !important; margin-left: 15px !important; } /* ตัวเลขเวลาปัจจุบัน */
+.plyr__controls > .plyr__time--current                     { order: 5 !important; margin-left: 15px !important; } /* ตัวเลขเวลาปัจจุบัน */
 
-/* 🎯 ใช้ช่องไฟปุ่ม Duration (เวลาที่เหลือ) ดันขยายเพื่อแยกกลุ่มปุ่มซ้ายและขวาออกจากกันอัตโนมัติ */
+/* ใช้ช่องไฟปุ่ม Duration (เวลาที่เหลือ) ดันขยายเพื่อแยกกลุ่มปุ่มซ้ายและขวาออกจากกันอัตโนมัติ */
 .plyr__controls > .plyr__time--duration                   { 
     order: 6 !important; 
     flex-grow: 1 !important; 
@@ -420,12 +452,12 @@ body {
 }
 
 /* กลุ่มปุ่มฝั่งขวา */
-.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* หลอดปรับเสียง */
-.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; } /* ปุ่มเปิด/ปิดซับ */
-.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; } /* ปุ่มเฟืองความละเอียด */
-.plyr__controls > button[data-plyr="fullscreen"]           { order: 10 !important; } /* ปุ่มเปิดเต็มจอ */
+.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* หลอดปรับความดังเสียง */
+.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; } /* ปุ่มเปิด/ปิดซับ CC */
+.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; } /* ปุ่มเฟืองความละเอียดและสปีด */
+.plyr__controls > button[data-plyr="fullscreen"]           { order: 10 !important; } /* ปุ่มเปิดเต็มหน้าจอ */
 
-/* คุมการยืดขยายโครงสร้างปุ่มกรอเวลา 10 วินาที */
+/* คุมการยืดขยายโครงสร้างปุ่มกรอเวลา 10 วินาที บนคอมพิวเตอร์ */
 .plyr__controls__item[data-plyr="rewind"], 
 .plyr__controls__item[data-plyr="fast-forward"] {
     padding: 2px !important;
@@ -434,8 +466,8 @@ body {
 }
 .plyr__controls__item[data-plyr="rewind"] svg, 
 .plyr__controls__item[data-plyr="fast-forward"] svg {
-    height: 26px !important;                 /* ความสูงไอคอนกรอเวลาบนคอม */
-    width: 26px !important;                  /* ความกว้างไอคอนกรอเวลาบนคอม */
+    height: 26px !important;                 /* 👈 ความสูงไอคอนกรอเวลาถอย-เดินหน้า บนคอมปกติ */
+    width: 26px !important;                  /* 👈 ความกว้างไอคอนกรอเวลาถอย-เดินหน้า บนคอมปกติ */
     pointer-events: none;
 }
 
@@ -452,25 +484,54 @@ body {
     /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง ป้องกันปุ่มล้นจอตกบรรทัด */
     .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
     .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* ย่อขนาดตัวอักษรบอกเวลาปัจจุบัน */
-    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* ย่อขนาดตัวอักษรบอกเวลาคงเหลือ */
+    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
+    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาคงเหลือบนมือถือ */
 
     /* 📐 ย่อขนาดสัดส่วนไอคอนปุ่มกรอกลับ-เดินหน้า 10 วินาที บนมือถือ */
     .plyr__controls__item[data-plyr="rewind"] svg, 
     .plyr__controls__item[data-plyr="fast-forward"] svg {
-        height: 20px !important;              /* ความสูงปุ่มกรอเวลามือถือ */
-        width: 20px !important;               /* ความกว้างปุ่มกรอเวลามือถือ */
+        height: 20px !important;              /* 👈 ความสูงปุ่มกรอเวลามือถือ */
+        width: 20px !important;               /* 👈 ความกว้างปุ่มกรอเวลามือถือ */
     }
 
     /* บีบระยะห่างปุ่มกลุ่มฝั่งขวาบนมือถือ และจำกัดความยาวสูงสุดของหลอดลากเสียง */
-    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* max-width คือความยาวหลอดเสียงบนมือถือ */
+    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
     .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
     .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
 
     /* 🔎 ลดขนาดกล่องรับสัมผัส (Padding) ด้านในของทุกๆ ปุ่มให้ผอมบางลง เพื่อให้เบียดอยู่ในแถวเดียวกันได้พอดี */
     .plyr__controls button, 
     .plyr__controls .plyr__controls__item {
-        padding: 4px !important;             /* ยิ่งตัวเลขน้อยลง ปุ่มยิ่งชิดและผอมลง เหมาะกับแก้ไขตอนปุ่มล้นจอ */
+        padding: 4px !important;             /* 📐 👈 [ขนาดปุ่มบนมือถือ] ยิ่งเลขน้อยลง ปุ่มยิ่งชิดและผอมลง เหมาะแก้ไขตอนปุ่มล้นจอตกบรรทัด */
     }
+}
+
+/* =========================================================================
+   🚀 โค้ดเจาะจงทำลายตุ่ม (Thumb) เฉพาะ "แถบเวลา" (ไม่ยุ่งกับหลอดเสียง)
+   ========================================================================= */
+
+/* 1. ปิดตัวแปรระบบของ Plyr เฉพาะในบล็อกแถบเวลา */
+.plyr__progress {
+    --plyr-range-thumb-background: transparent !important;
+    --plyr-range-thumb-shadow: none !important;
+    --plyr-range-thumb-active-shadow-width: 0px !important;
+    --plyr-range-thumb-height: 0px !important;
+    --plyr-range-thumb-width: 0px !important;
+}
+
+/* 2. บังคับเบราว์เซอร์ซ่อนตุ่มสไลเดอร์ เฉพาะในบล็อกแถบเวลา */
+.plyr__progress input[type=range]::-webkit-slider-thumb,
+.plyr__progress input[type=range]::-moz-range-thumb,
+.plyr__progress input[type=range]::-ms-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: transparent !important;
+    border: none !important;
+    width: 0px !important;
+    height: 0px !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    transform: scale(0) !important;
+    visibility: hidden !important;
 }
 /* ========================================================================= */
