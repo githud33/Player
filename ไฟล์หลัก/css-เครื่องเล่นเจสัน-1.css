@@ -226,8 +226,8 @@ body {
     
     /* 🎯 เจาะลึกถึงตัวไอคอน SVG ทุกปุ่มในแผงควบคุมด้านล่าง เพื่อให้ปรับขนาดได้ดั่งใจ */
     .plyr__controls .plyr__control svg {
-        height: 24px !important;             /* 👈 🎯 ขนาดไอคอนเมนูแถวล่างสุดบนจอคอมพิวเตอร์ (ปัจจุบันเคาะไว้ที่ 24px กำลังสวย) */
-        width: 24px !important;              
+        height: 21px !important;             /* 👈 🎯 ขนาดไอคอนเมนูแถวล่างสุดบนจอคอมพิวเตอร์ (ปัจจุบันเคาะไว้ที่ 24px กำลังสวย) /* เปลี่ยนคืนเป็น 21 */
+        width: 21px !important;              
     }
 }
 
@@ -455,7 +455,8 @@ body {
 .plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* หลอดปรับความดังเสียง */
 .plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; } /* ปุ่มเปิด/ปิดซับ CC */
 .plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; } /* ปุ่มเฟืองความละเอียดและสปีด */
-.plyr__controls > button[data-plyr="fullscreen"]           { order: 10 !important; } /* ปุ่มเปิดเต็มหน้าจอ */
+.plyr__controls > button[data-plyr="pip"]                  { order: 10 !important; }
+.plyr__controls > button[data-plyr="fullscreen"]           { order: 11 !important; } /* ปุ่มเปิดเต็มหน้าจอ */
 
 /* คุมการยืดขยายโครงสร้างปุ่มกรอเวลา 10 วินาที บนคอมพิวเตอร์ */
 .plyr__controls__item[data-plyr="rewind"], 
