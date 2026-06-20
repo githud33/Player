@@ -452,9 +452,9 @@ body {
 }
 
 /* กลุ่มปุ่มฝั่งขวา */
-.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 6px !important; } /* หลอดปรับความดังเสียง */
-.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 6px !important; } /* ปุ่มเปิด/ปิดซับ CC */
-.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 6px !important; } /* ปุ่มเฟืองความละเอียดและสปีด */
+.plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 12px !important; } /* หลอดปรับความดังเสียง */
+.plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 12px !important; } /* ปุ่มเปิด/ปิดซับ CC */
+.plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 12px !important; } /* ปุ่มเฟืองความละเอียดและสปีด */
 .plyr__controls > button[data-plyr="pip"]                  { order: 10 !important; }
 .plyr__controls > button[data-plyr="fullscreen"]           { order: 11 !important; } /* ปุ่มเปิดเต็มหน้าจอ */
 
@@ -496,9 +496,9 @@ body {
     }
 
     /* บีบระยะห่างปุ่มกลุ่มฝั่งขวาบนมือถือ และจำกัดความยาวสูงสุดของหลอดลากเสียง */
-    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
-    .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
-    .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
+    .plyr__controls > .plyr__volume                            { margin-right: 2px !important; max-width: 45px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 2px !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 2px !important; }
 
     /* 🔎 ลดขนาดกล่องรับสัมผัส (Padding) ด้านในของทุกๆ ปุ่มให้ผอมบางลง เพื่อให้เบียดอยู่ในแถวเดียวกันได้พอดี */
     .plyr__controls button, 
