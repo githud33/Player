@@ -455,7 +455,7 @@ body {
 .plyr__controls > .plyr__volume                            { order: 7 !important; margin-right: 6px !important; } /* หลอดปรับความดังเสียง */
 .plyr__controls > button[data-plyr="captions"]             { order: 8 !important; margin-right: 6px !important; } /* ปุ่มเปิด/ปิดซับ CC */
 .plyr__controls > .plyr__menu                              { order: 9 !important; margin-right: 6px !important; } /* ปุ่มเฟืองความละเอียดและสปีด */
-.plyr__controls > button[data-plyr="pip"]                  { order: 10 !important; margin-right: 0px !important; }
+.plyr__controls > button[data-plyr="pip"]                  { order: 10 !important; }
 .plyr__controls > button[data-plyr="fullscreen"]           { order: 11 !important; } /* ปุ่มเปิดเต็มหน้าจอ */
 
 /* คุมการยืดขยายโครงสร้างปุ่มกรอเวลา 10 วินาที บนคอมพิวเตอร์ */
