@@ -61,7 +61,7 @@
             captions: { active: false, language: '', update: true },
             
             controls: [
-                'play-large', 'play', 'rewind', 'fast-forward', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'fullscreen'
+                'play-large', 'play', 'rewind', 'fast-forward', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
             ],
             
             settings: ['quality', 'speed', 'loop', 'audioTrack'],
