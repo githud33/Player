@@ -60,7 +60,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         iconUrl: 'https://assets.mediadelivery.net/plyr/3.7.3.2/plyr.svg',
         
         // 🎯 [แก้ไข]: เปิดระบบพร้อมแสดงคำบรรยายอัตโนมัติ
-        captions: { active: true, language: 'auto', update: true },
+       // captions: { active: true, language: 'auto', update: true },
+        
+        // 🎯 [แก้ไขกลับ]: เปลี่ยนเป็น false เพื่อปิดซับไตเติลอัตโนมัติ (ให้คนดูเปิดเอง)
+        captions: { active: false, language: '', update: true },
         
         controls: [
             'play-large', 'play', 'rewind', 'fast-forward', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
