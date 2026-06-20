@@ -477,33 +477,36 @@ body {
    📱 ส่วนที่ 7: ดักบีบระยะช่องไฟและขนาดไอคอนบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
    ========================================================================= */
 @media (max-width: 600px) {
-    /* บีบขอบกล่องแผงควบคุมหลักบนมือถือให้ขยับชิดขึ้นเพื่อประหยัดพื้นที่แนวนอน */
+    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถวลงไปบรรทัดใหม่เด็ดขาด 🎯 */
     .plyr__controls {
-        padding: 6px 8px 8px 8px !important;
+        padding: 6px 6px 8px 6px !important;
+        flex-wrap: nowrap !important; /* 👈 ตัวล็อกไม้ตาย: สั่งให้ทุกปุ่มต่อแถวหน้ากระดานห้ามตกบรรทัด */
     }
 
-    /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง ป้องกันปุ่มล้นจอตกบรรทัด */
-    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
-    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
-    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาคงเหลือบนมือถือ */
+    /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง */
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 3px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 3px !important; }
+    .plyr__controls > .plyr__time--current                             { margin-left: 4px !important; font-size: 11px !important; } /* ขนาดเลขเวลาปัจจุบัน */
+    .plyr__controls > .plyr__time--duration                            { margin-left: 2px !important; font-size: 11px !important; } /* ขนาดเลขเวลาคงเหลือ */
 
-    /* 📐 ย่อขนาดสัดส่วนไอคอนปุ่มกรอกลับ-เดินหน้า 10 วินาที บนมือถือ */
-    .plyr__controls__item[data-plyr="rewind"] svg, 
-    .plyr__controls__item[data-plyr="fast-forward"] svg {
-        height: 20px !important;              /* 👈 ความสูงปุ่มกรอเวลามือถือ */
-        width: 20px !important;               /* 👈 ความกว้างปุ่มกรอเวลามือถือ */
+    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง 2 พิกเซล เพื่อให้ยัดลงหน้าจอมือถือแคบ ๆ ได้ครบถ้วน */
+    .plyr__controls button svg,
+    .plyr__controls__item svg {
+        height: 18px !important; /* 👈 ย่อขนาดไอคอนลงเหลือ 18px เซฟพื้นที่ได้เยอะมาก */
+        width: 18px !important;
     }
 
-    /* บีบระยะห่างปุ่มกลุ่มฝั่งขวาบนมือถือ และจำกัดความยาวสูงสุดของหลอดลากเสียง */
-    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
-    .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
-    .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
+    /* บีบกลุ่มปุ่มฝั่งขวา (หลอดเสียง, CC, เฟือง settings, PIP, เต็มจอ) ให้ขยับมาชิดกันมากขึ้น */
+    .plyr__controls > .plyr__volume                           { margin-right: 3px !important; max-width: 35px !important; } /* 📐 หดหลอดสไลด์เสียงให้สั้นลงอีกนิด */
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 3px !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 3px !important; }
+    .plyr__controls > button[data-plyr="pip"]                  { margin-right: 3px !important; } /* 🎯 คุมระยะห่างของปุ่ม PIP */
+    .plyr__controls > button[data-plyr="fullscreen"]           { margin-right: 0px !important; }
 
-    /* 🔎 ลดขนาดกล่องรับสัมผัส (Padding) ด้านในของทุกๆ ปุ่มให้ผอมบางลง เพื่อให้เบียดอยู่ในแถวเดียวกันได้พอดี */
+    /* 🔎 ลดเนื้อที่สัมผัสรอบปุ่มให้ผอมบางลงอีกนิด เพื่อรีดพื้นที่ในแนวระนาบ */
     .plyr__controls button, 
     .plyr__controls .plyr__controls__item {
-        padding: 4px !important;             /* 📐 👈 [ขนาดปุ่มบนมือถือ] ยิ่งเลขน้อยลง ปุ่มยิ่งชิดและผอมลง เหมาะแก้ไขตอนปุ่มล้นจอตกบรรทัด */
+        padding: 3px !important; /* 📐 รีดจาก 4px เหลือ 3px แถวจะตรงเป๊ะพอดีเป๊ะครับ */
     }
 }
 
