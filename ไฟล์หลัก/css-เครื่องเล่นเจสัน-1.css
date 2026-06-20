@@ -483,9 +483,9 @@ body {
     }
 
     /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง ป้องกันปุ่มล้นจอตกบรรทัด */
-    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
-    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 3px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 3px !important; }
+    .plyr__controls > .plyr__time--current                             { margin-left: 3px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
     .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาคงเหลือบนมือถือ */
 
     /* 📐 ย่อขนาดสัดส่วนไอคอนปุ่มกรอกลับ-เดินหน้า 10 วินาที บนมือถือ */
