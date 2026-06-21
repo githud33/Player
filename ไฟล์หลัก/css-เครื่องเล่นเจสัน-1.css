@@ -477,19 +477,19 @@ body {
    📱 ส่วนที่ 7: ดักบีบระยะช่องไฟและขนาดไอคอนบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
    ========================================================================= */
 @media (max-width: 600px) {
-    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถวลงไปบรรทัดใหม่ */
+    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถว */
     .plyr__controls {
         padding: 6px 6px 8px 6px !important;
-        flex-wrap: nowrap !important; /* สั่งให้ทุกปุ่มต่อแถวหน้ากระดาน */
+        flex-wrap: nowrap !important;
     }
 
-    /* 🎯 ไม้ตายแก้ปัญหากล่องเวลาแตกแถวแนวตั้ง: ล็อกตัวเลขเวลาห้ามโดนบีบจนผอม */
+    /* ล็อกตัวเลขเวลาห้ามโดนบีบจนผอมเด็ดขาด */
     .plyr__time--current,
     .plyr__time--duration,
     .plyr__time {
-        white-space: nowrap !important;  /* 👈 ล็อกตัวเลขให้เรียงกันแนวนอนเท่านั้น ห้ามขึ้นบรรทัดใหม่ */
-        flex-shrink: 0 !important;      /* 👈 สั่งเบราว์เซอร์ห้ามบีบความกว้างกล่องนี้เด็ดขาด */
-        font-size: 11px !important;     /* ขนาดตัวอักษรเวลามือถือ */
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        font-size: 11px !important;
     }
 
     /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง */
@@ -498,15 +498,14 @@ body {
     .plyr__controls > .plyr__time--current                             { margin-left: 4px !important; }
     .plyr__controls > .plyr__time--duration                            { margin-left: 2px !important; }
 
-    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง เพื่อให้ยัดลงหน้าจอมือถือแคบ ๆ ได้ครบถ้วน */
+    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง เพื่อให้ยัดลงหน้าจอมือถือได้ครบถ้วน */
     .plyr__controls button svg,
     .plyr__controls__item svg {
         height: 18px !important;
         width: 18px !important;
     }
 
-    /* บีบกลุ่มปุ่มฝั่งขวา (หลอดเสียง, CC, เฟือง settings, PIP, เต็มจอ) ให้ขยับมาชิดกัน และห้ามโดนบีบจนเพี้ยน */
-    .plyr__controls > .plyr__volume                           { margin-right: 3px !important; max-width: 38px !important; flex-shrink: 0 !important; } 
+    /* บีบกลุ่มปุ่มฝั่งขวา ให้ขยับมาชิดกันมากขึ้น */
     .plyr__controls > button[data-plyr="captions"]             { margin-right: 3px !important; flex-shrink: 0 !important; }
     .plyr__controls > .plyr__menu                              { margin-right: 3px !important; flex-shrink: 0 !important; }
     .plyr__controls > button[data-plyr="pip"]                  { margin-right: 3px !important; flex-shrink: 0 !important; }
@@ -516,6 +515,32 @@ body {
     .plyr__controls button, 
     .plyr__controls .plyr__controls__item {
         padding: 3px !important;
+    }
+}
+
+/* =========================================================================
+   🎯 สูตรลับสลับโหมด: แยกพฤติกรรมตามการหมุนจอ (แนวตั้ง-แนวนอน)
+   ========================================================================= */
+
+/* 📱 1. โหมดจอแนวตั้ง (Portrait): สั่งซ่อนหลอดเสียงสีแดง เพื่อเอาพื้นที่คืนมา */
+@media (max-width: 600px) and (orientation: portrait) {
+    .plyr__volume input[type="range"] {
+        display: none !important; /* ❌ ซ่อนเฉพาะหลอดสไลด์สีแดง */
+    }
+    .plyr__controls > .plyr__volume {
+        max-width: 24px !important; /* 📐 หดกล่องเสียงให้เหลือสเปซเท่าแค่ปุ่มลำโพง */
+        margin-right: 3px !important;
+    }
+}
+
+/* 📲 2. โหมดจอแนวนอน (Landscape): เปิดเว็บแนวนอนปุ๊บ ดีดหลอดเสียงแดง ๆ กลับคืนมาทันที */
+@media (orientation: landscape) {
+    .plyr__volume input[type="range"] {
+        display: block !important; /* เอากลับคืนมา */
+    }
+    .plyr__controls > .plyr__volume {
+        max-width: 55px !important; /* 📐 แถมขยายหลอดให้ยาวลากสะใจขึ้น เพราะแนวนอนพื้นที่มีเหลือเฟือ */
+        margin-right: 6px !important;
     }
 }
 
