@@ -477,36 +477,45 @@ body {
    📱 ส่วนที่ 7: ดักบีบระยะช่องไฟและขนาดไอคอนบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
    ========================================================================= */
 @media (max-width: 600px) {
-    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถวลงไปบรรทัดใหม่เด็ดขาด 🎯 */
+    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถวลงไปบรรทัดใหม่ */
     .plyr__controls {
         padding: 6px 6px 8px 6px !important;
-        flex-wrap: nowrap !important; /* 👈 ตัวล็อกไม้ตาย: สั่งให้ทุกปุ่มต่อแถวหน้ากระดานห้ามตกบรรทัด */
+        flex-wrap: nowrap !important; /* สั่งให้ทุกปุ่มต่อแถวหน้ากระดาน */
+    }
+
+    /* 🎯 ไม้ตายแก้ปัญหากล่องเวลาแตกแถวแนวตั้ง: ล็อกตัวเลขเวลาห้ามโดนบีบจนผอม */
+    .plyr__time--current,
+    .plyr__time--duration,
+    .plyr__time {
+        white-space: nowrap !important;  /* 👈 ล็อกตัวเลขให้เรียงกันแนวนอนเท่านั้น ห้ามขึ้นบรรทัดใหม่ */
+        flex-shrink: 0 !important;      /* 👈 สั่งเบราว์เซอร์ห้ามบีบความกว้างกล่องนี้เด็ดขาด */
+        font-size: 11px !important;     /* ขนาดตัวอักษรเวลามือถือ */
     }
 
     /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง */
     .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 3px !important; }
     .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 3px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 4px !important; font-size: 11px !important; } /* ขนาดเลขเวลาปัจจุบัน */
-    .plyr__controls > .plyr__time--duration                            { margin-left: 2px !important; font-size: 11px !important; } /* ขนาดเลขเวลาคงเหลือ */
+    .plyr__controls > .plyr__time--current                             { margin-left: 4px !important; }
+    .plyr__controls > .plyr__time--duration                            { margin-left: 2px !important; }
 
-    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง 2 พิกเซล เพื่อให้ยัดลงหน้าจอมือถือแคบ ๆ ได้ครบถ้วน */
+    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง เพื่อให้ยัดลงหน้าจอมือถือแคบ ๆ ได้ครบถ้วน */
     .plyr__controls button svg,
     .plyr__controls__item svg {
-        height: 18px !important; /* 👈 ย่อขนาดไอคอนลงเหลือ 18px เซฟพื้นที่ได้เยอะมาก */
+        height: 18px !important;
         width: 18px !important;
     }
 
-    /* บีบกลุ่มปุ่มฝั่งขวา (หลอดเสียง, CC, เฟือง settings, PIP, เต็มจอ) ให้ขยับมาชิดกันมากขึ้น */
-    .plyr__controls > .plyr__volume                           { margin-right: 3px !important; max-width: 35px !important; } /* 📐 หดหลอดสไลด์เสียงให้สั้นลงอีกนิด */
-    .plyr__controls > button[data-plyr="captions"]             { margin-right: 3px !important; }
-    .plyr__controls > .plyr__menu                              { margin-right: 3px !important; }
-    .plyr__controls > button[data-plyr="pip"]                  { margin-right: 3px !important; } /* 🎯 คุมระยะห่างของปุ่ม PIP */
-    .plyr__controls > button[data-plyr="fullscreen"]           { margin-right: 0px !important; }
+    /* บีบกลุ่มปุ่มฝั่งขวา (หลอดเสียง, CC, เฟือง settings, PIP, เต็มจอ) ให้ขยับมาชิดกัน และห้ามโดนบีบจนเพี้ยน */
+    .plyr__controls > .plyr__volume                           { margin-right: 3px !important; max-width: 38px !important; flex-shrink: 0 !important; } 
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 3px !important; flex-shrink: 0 !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 3px !important; flex-shrink: 0 !important; }
+    .plyr__controls > button[data-plyr="pip"]                  { margin-right: 3px !important; flex-shrink: 0 !important; }
+    .plyr__controls > button[data-plyr="fullscreen"]           { margin-right: 0px !important; flex-shrink: 0 !important; }
 
     /* 🔎 ลดเนื้อที่สัมผัสรอบปุ่มให้ผอมบางลงอีกนิด เพื่อรีดพื้นที่ในแนวระนาบ */
     .plyr__controls button, 
     .plyr__controls .plyr__controls__item {
-        padding: 3px !important; /* 📐 รีดจาก 4px เหลือ 3px แถวจะตรงเป๊ะพอดีเป๊ะครับ */
+        padding: 3px !important;
     }
 }
 
