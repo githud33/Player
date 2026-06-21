@@ -478,10 +478,10 @@ body {
    ========================================================================= */
 @media (max-width: 600px) {
     /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถว */
-    .plyr__controls {
-        padding: 6px 6px 8px 6px !important;
-        flex-wrap: nowrap !important;
-    }
+.plyr__controls {
+    padding: 6px 6px 8px 6px !important;
+    flex-wrap: wrap !important; /* <--- เปลี่ยนจาก nowrap เป็น wrap แค่นี้จบเลยครับ! */
+}
 
     /* ล็อกตัวเลขเวลาห้ามโดนบีบจนผอมเด็ดขาด */
     .plyr__time--current,
