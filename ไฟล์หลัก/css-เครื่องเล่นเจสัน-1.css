@@ -519,28 +519,17 @@ body {
 }
 
 /* =========================================================================
-   🎯 สูตรลับสลับโหมด: แยกพฤติกรรมตามการหมุนจอ (แนวตั้ง-แนวนอน)
+   🎯 ตั้งค่าหลอดเสียงสำหรับจอมือถือ (โชว์ตลอดเวลา พื้นที่เหลือเฟือไม่แคบแล้ว)
    ========================================================================= */
-
-/* 📱 1. โหมดจอแนวตั้ง (Portrait): สั่งซ่อนหลอดเสียงสีแดง เพื่อเอาพื้นที่คืนมา */
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 600px) {
+    /* สั่งให้หลอดสไลด์เสียงสีแดงแสดงผลปกติ ทั้งแนวตั้งและแนวนอน */
     .plyr__volume input[type="range"] {
-        display: none !important; /* ❌ ซ่อนเฉพาะหลอดสไลด์สีแดง */
+        display: block !important; 
     }
+    /* คุมความกว้างหลอดเสียงบนมือถือให้กะทัดรัดพอดีสายตา */
     .plyr__controls > .plyr__volume {
-        max-width: 24px !important; /* 📐 หดกล่องเสียงให้เหลือสเปซเท่าแค่ปุ่มลำโพง */
-        margin-right: 3px !important;
-    }
-}
-
-/* 📲 2. โหมดจอแนวนอน (Landscape): เปิดเว็บแนวนอนปุ๊บ ดีดหลอดเสียงแดง ๆ กลับคืนมาทันที */
-@media (orientation: landscape) {
-    .plyr__volume input[type="range"] {
-        display: block !important; /* เอากลับคืนมา */
-    }
-    .plyr__controls > .plyr__volume {
-        max-width: 55px !important; /* 📐 แถมขยายหลอดให้ยาวลากสะใจขึ้น เพราะแนวนอนพื้นที่มีเหลือเฟือ */
-        margin-right: 6px !important;
+        max-width: 55px !important; 
+        margin-right: 4px !important;
     }
 }
 
