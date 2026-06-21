@@ -483,10 +483,10 @@ body {
     }
 
     /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง ป้องกันปุ่มล้นจอตกบรรทัด */
-    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 5px !important; }
-    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 5px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 6px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
-    .plyr__controls > .plyr__time--duration                            { margin-left: 3px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาคงเหลือบนมือถือ */
+    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 0px !important; }
+    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 0px !important; }
+    .plyr__controls > .plyr__time--current                             { margin-left: 0px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาปัจจุบันบนมือถือ */
+    .plyr__controls > .plyr__time--duration                            { margin-left: 0px !important; font-size: 11px !important; } /* 👈 ขนาดเลขเวลาคงเหลือบนมือถือ */
 
     /* 📐 ย่อขนาดสัดส่วนไอคอนปุ่มกรอกลับ-เดินหน้า 10 วินาที บนมือถือ */
     .plyr__controls__item[data-plyr="rewind"] svg, 
@@ -496,9 +496,9 @@ body {
     }
 
     /* บีบระยะห่างปุ่มกลุ่มฝั่งขวาบนมือถือ และจำกัดความยาวสูงสุดของหลอดลากเสียง */
-    .plyr__controls > .plyr__volume                            { margin-right: 5px !important; max-width: 45px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
-    .plyr__controls > button[data-plyr="captions"]             { margin-right: 5px !important; }
-    .plyr__controls > .plyr__menu                              { margin-right: 5px !important; }
+    .plyr__controls > .plyr__volume                            { margin-right: 0px !important; max-width: 50px !important; } /* 📐 👈 [ความยาวหลอดเสียงมือถือ] */
+    .plyr__controls > button[data-plyr="captions"]             { margin-right: 0px !important; }
+    .plyr__controls > .plyr__menu                              { margin-right: 0px !important; }
 
     /* 🔎 ลดขนาดกล่องรับสัมผัส (Padding) ด้านในของทุกๆ ปุ่มให้ผอมบางลง เพื่อให้เบียดอยู่ในแถวเดียวกันได้พอดี */
     .plyr__controls button, 
