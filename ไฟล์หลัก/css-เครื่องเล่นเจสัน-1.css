@@ -474,47 +474,37 @@ body {
 
 
 /* =========================================================================
-   📱 ส่วนที่ 7: ดักบีบระยะช่องไฟและขนาดไอคอนบนหน้าจอมือถือ (ป้องกันปุ่มล้นแตกแถว)
+   🎯 ส่วนที่ 7: ปรับแต่งแผงควบคุมระบบสำหรับหน้าจอมือถือ (เวอร์ชันสมบูรณ์ที่สุด)
    ========================================================================= */
 @media (max-width: 600px) {
-    /* บีบขอบกล่องแผงควบคุมหลัก และบังคับให้ทุกปุ่มเรียงแถวเดียว ห้ามแตกแถว */
-.plyr__controls {
-    padding: 6px 6px 8px 6px !important;
-    flex-wrap: wrap !important; /* <--- เปลี่ยนจาก nowrap เป็น wrap แค่นี้จบเลยครับ! */
-}
 
-    /* ล็อกตัวเลขเวลาห้ามโดนบีบจนผอมเด็ดขาด */
-    .plyr__time--current,
-    .plyr__time--duration,
-    .plyr__time {
-        white-space: nowrap !important;
-        flex-shrink: 0 !important;
-        font-size: 11px !important;
+    /* 1️⃣ ปรับแผงควบคุมเป็น 2 แถว (ยอมให้ขึ้นบรรทัดใหม่) 
+       - เพื่อดึงเส้นแถวเวลาสีแดงกลับมาแผ่เต็มแถวบน กรอง่ายขึ้น
+       - เพื่อให้ปุ่มกดแถวล่างมีพื้นที่โล่ง ไม่เบียดเกยทับกัน */
+    .plyr__controls {
+        padding: 6px 6px 8px 6px !important;
+        flex-wrap: wrap !important; /* เปลี่ยนเป็น wrap ยอมให้ยืดหยุ่นแยกบรรทัดได้ */
     }
 
-    /* 📐 บีบระยะห่าง (Margin) ระหว่างปุ่มฝั่งซ้ายบนมือถือให้แคบลง */
-    .plyr__controls > .plyr__controls__item[data-plyr="rewind"]       { margin-left: 3px !important; }
-    .plyr__controls > .plyr__controls__item[data-plyr="fast-forward"]  { margin-left: 3px !important; }
-    .plyr__controls > .plyr__time--current                             { margin-left: 4px !important; }
-    .plyr__controls > .plyr__time--duration                            { margin-left: 2px !important; }
-
-    /* 📐 ย่อขนาดไอคอนของทุก ๆ ปุ่มลงเล็กลง เพื่อให้ยัดลงหน้าจอมือถือได้ครบถ้วน */
-    .plyr__controls button svg,
-    .plyr__controls__item svg {
-        height: 18px !important;
-        width: 18px !important;
+    /* 2️⃣ ซ่อนปุ่ม PiP (กดย่อหน้าจอเล็ก) เฉพาะบนจอมือถือ 
+       - เหตุผล: จอมือถือเล็กเกินไป ไม่เหมาะกับการย่อจอซ้อน และช่วยคืนพื้นที่แถวล่างให้โล่งขึ้น
+       - หมายเหตุ: บนหน้าจอคอมพิวเตอร์ (จอใหญ่) ปุ่มนี้จะยังอยู่และใช้งานได้ปกติ 100% */
+    .plyr__controls [data-plyr="pip"] {
+        display: none !important;
     }
 
-    /* บีบกลุ่มปุ่มฝั่งขวา ให้ขยับมาชิดกันมากขึ้น */
-    .plyr__controls > button[data-plyr="captions"]             { margin-right: 3px !important; flex-shrink: 0 !important; }
-    .plyr__controls > .plyr__menu                              { margin-right: 3px !important; flex-shrink: 0 !important; }
-    .plyr__controls > button[data-plyr="pip"]                  { margin-right: 3px !important; flex-shrink: 0 !important; }
-    .plyr__controls > button[data-plyr="fullscreen"]           { margin-right: 0px !important; flex-shrink: 0 !important; }
-
-    /* 🔎 ลดเนื้อที่สัมผัสรอบปุ่มให้ผอมบางลงอีกนิด เพื่อรีดพื้นที่ในแนวระนาบ */
-    .plyr__controls button, 
-    .plyr__controls .plyr__controls__item {
-        padding: 3px !important;
+    /* 3️⃣ เปิดให้หลอดสไลด์เสียงสีแดงแสดงผลตามปกติ ทั้งแนวตั้งและแนวนอน
+       - เหตุผล: เนื่องจากเราปรับเป็น 2 แถวแล้ว พื้นที่ปุ่มกดด้านล่างจึงเหลือเฟือ 
+       - คนดูจะสามารถใช้นิ้วลากปรับระดับเสียงบนจอมือถือแนวตั้งได้เลย ไม่ต้องคอยหมุนจอ */
+    .plyr__volume input[type="range"] {
+        display: block !important; 
+    }
+    
+    /* 4️⃣ ควบคุมความกว้างของหลอดสไลด์เสียงบนมือถือให้กะทัดรัดพอดีสายตา
+       - บีบขนาดหลอดเสียงให้เหลือ 55px เพื่อไม่ให้ไปเบียดพื้นที่ของปุ่มข้าง ๆ */
+    .plyr__controls > .plyr__volume {
+        max-width: 55px !important; 
+        margin-right: 4px !important;
     }
 }
 
