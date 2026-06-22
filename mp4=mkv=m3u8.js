@@ -1,13 +1,86 @@
+// ==========================================
+// ✅แก้ไขสมบูรณ์แล้ว✔MP4-MKV-M3U8 (เวอร์ชันแก้ไขบั๊กจำไม่แม่นลิงก์ Token เปลี่ยน)แก้ไขสมบูรณ์แล้ว.js
+//  https://github.com/githud33/copy/blob/main/videoโค้ดหลักใช้งาน
+// เหมือนกับตัว เครื่องเล่น-js-m3u8.js ที่ใช้อยู่ ไว้สำหรับให้ดาวน์โหลด MP4 หรือเปิด MP4
+// ==========================================
+
 var video_start_time = 0;
-function setPlayerStartingPosition(player) {
-    if (video_start_time > 0) {
-        player.on('loadeddata', function (event) {
-            var instance = event.detail.plyr;
-            if (video_start_time <= instance.duration) {
-                instance.off('loadeddata', event);
-                instance.currentTime = video_start_time;
+
+// 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันรวมร่างอัจฉริยะ ล็อกเป้าตัวเปลี่ยนโหมดให้เห็นชัด ๆ)
+function setPlayerStartingPosition(player, sourceUrl) {
+    if (!sourceUrl) return;
+
+    // =========================================================================
+    // 👇👇👇 👉👉👉 [ สวิตช์เปิด-ปิดระบบจำเวลาล่าสุด ] 👈👈👈 👇👇👇
+    // =========================================================================
+    // 🔹 ตั้งค่าเป็น true  = เปิดระบบจำเวลาล่าสุด (ดูค้างไว้ตรงไหน กลับมาเล่นต่อตรงนั้น)
+    // 🔹 ตั้งค่าเป็น false = ปิดระบบจำเวลาล่าสุด (วิดีโอจะบังคับเริ่มใหม่จาก 0 ทุกครั้ง)
+    
+    var enableRememberTime = true; // 👈👈👈 🔥 พี่เปลี่ยนโหมดตรงคำนี้คำเดียวเลยครับ! 🔥
+    
+    // =========================================================================
+    // 👆👆👆 👉👉👉 [ ล็อกเป้าหมายตรงนี้เลยครับพี่ ] 👈👈👈 👆👆👆
+    // =========================================================================
+
+    if (enableRememberTime) {
+        // ==========================================
+        //  [ชุดที่ 1: โหมดเปิดระบบจำเวลาล่าสุด] 
+        // ==========================================
+        var cleanUrl = sourceUrl.split('?')[0].split('#')[0];
+        var storageKey = 'plyr_last_time_' + cleanUrl; 
+        
+        var savedTime = localStorage.getItem(storageKey);
+        var startTime = savedTime ? parseFloat(savedTime) : video_start_time;
+
+        if (startTime > 0) {
+            player.on('ready', function () {
+                setTimeout(function() {
+                    if (startTime <= player.duration) {
+                        player.currentTime = startTime;
+                        console.log('🤖 [นายช่าง] ดึงเวลาจากลิงก์หลัก พาพี่กลับมานาทีที่: ' + startTime);
+                    }
+                }, 300); // หน่วงเวลา 0.3 วินาที เพื่อให้ตัวเล่นนิ่งพร้อมรับค่าเวลาใหม่
+            });
+        }
+
+        // ฟังก์ชันส่วนกลางสำหรับสั่งบันทึกเวลาปัจจุบัน
+        function saveCurrentTime() {
+            if (player && player.currentTime > 5) { 
+                localStorage.setItem(storageKey, player.currentTime);
+            }
+        }
+
+        // เซฟเวลาทุกจังหวะสำคัญ (ตอนเวลาเปลี่ยน, ตอนกดหยุด, ตอนกำลังเลื่อนแถวเวลา)
+        player.on('timeupdate', saveCurrentTime);
+        player.on('pause', saveCurrentTime);
+        player.on('seeking', saveCurrentTime);
+
+        // ดักจับตอนที่พี่กำลังจะกดปุ่มเปลี่ยนตอน ให้รีบเซฟเวลาลงกล่องทันทีกันเหนียว
+        window.addEventListener('beforeunload', saveCurrentTime);
+        window.addEventListener('pagehide', saveCurrentTime);
+
+        // เช็คให้ชัวร์ว่าดูจบเรื่องจริง ๆ (เหลืออีกไม่ถึง 15 วินาทีจะจบ) ถึงจะยอมให้ลบความจำทิ้ง
+        player.on('ended', function () {
+            if (player.duration && player.currentTime >= (player.duration - 15)) {
+                localStorage.removeItem(storageKey);
+                console.log('🤖 [นายช่าง] ดูจนจบเรื่องจริง ๆ ล้างกล่องความจำเรียบร้อยครับ');
             }
         });
+
+    } else {
+        // ==========================================
+        //  [ชุดที่ 2: โหมดปิดระบบจำเวลา (เริ่มใหม่จาก 0)]
+        // ==========================================
+        if (video_start_time > 0) {
+            player.on('ready', function () {
+                setTimeout(function() {
+                    if (video_start_time <= player.duration) {
+                        player.currentTime = video_start_time;
+                    }
+                }, 300);
+            });
+        }
+        console.log('🤖 [นายช่าง] ปิดระบบจำเวลาเรียบร้อย (วิดีโอเริ่มเล่นใหม่จาก 0 ทุกครั้ง)');
     }
 }   
 
@@ -21,13 +94,8 @@ var levelsInternal = [];
 function getLabel(hlsLevelInfo) {
     var height = hlsLevelInfo.height;
     var width = hlsLevelInfo.width;
-    var isVertical = false;
-    if (height > width) {
-        var temp = width; width = height; height = temp; isVertical = true;
-    }
-    switch (height) {
-        case 2160: case 1440: case 1080: case 720: case 480: case 360: case 240: return height;
-    }
+    if (height > width) { var temp = width; width = height; height = temp; }
+    switch (height) { case 2160: case 1440: case 1080: case 720: case 480: case 360: case 240: return height; }
     switch (width) {
         case 3840: return 2160; case 2560: return 1440; case 1920: return 1080; case 1280: return 720;
         case 852: case 854: case 856: return 480; case 640: return 360; case 426: case 428: return 240;
@@ -47,78 +115,68 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 🛠️ ส่วนระบบปิดปรับปรุงเว็บไซต์ 
     // =========================================================================
     var backupVideoUrl = "https://your-domain.com/maintenance.mp4"; 
-    var isMaintenanceMode = false; // 🛑 เปลี่ยนเป็น true เมื่อต้องการเปิดระบบปิดปรับปรุง
+    var isMaintenanceMode = false; 
     // =========================================================================
 
-    if (isMaintenanceMode) {
-        source = backupVideoUrl; 
-    }
+    if (isMaintenanceMode) { source = backupVideoUrl; }
 
     var defaultOptions = {
         storage: { enabled: true, key: 'plyr--lib-107152' },
         fullscreen: { enabled: true, fallback: true, iosNative: true },
         iconUrl: 'https://assets.mediadelivery.net/plyr/3.7.3.2/plyr.svg',
-        
-        // 🎯 [แก้ไข]: เปิดระบบพร้อมแสดงคำบรรยายอัตโนมัติ
-       // captions: { active: true, language: 'auto', update: true },
-        
-        // 🎯 [แก้ไขกลับ]: เปลี่ยนเป็น false เพื่อปิดซับไตเติลอัตโนมัติ (ให้คนดูเปิดเอง)
         captions: { active: false, language: '', update: true },
-        
         controls: [
             'play-large', 'play', 'rewind', 'fast-forward', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
         ],
-        
-        // 🎯 [แก้ไข]: เพิ่ม 'captions' เข้ามาในอาร์เรย์ เพื่อดึงเมนูซับไตเติลมาโชว์ในปุ่มเฟือง
         settings: ['captions', 'quality', 'speed', 'loop', 'audioTrack'],
         speed: { selected: 1, options: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4] },
         
-        // 🎯 [แก้ไข]: อัปเดตโครงสร้างภาษาแบบจัดเรียงตรงแถว เป๊ะสะอาดตา
+        // 💬 [ ส่วน i18n จัดแถวแนวตั้งแบบอ่านง่าย สบายตาเรียบร้อยครับพี่ ]
         i18n: {
-            restart:         'รีสตาร์ท',
-            rewind:          'ย้อนกลับ {seektime} วินาที',
-            play:            'เล่น',
-            pause:           'หยุดชั่วคราว',
-            fastForward:     'ไปข้างหน้า {seektime} วินาที',
-            seek:            'ค้นหา',
-            seekLabel:       '{currentTime} จาก {duration}',
-            played:          'เล่นแล้ว',
-            buffered:        'บัฟเฟอร์',
-            currentTime:     'เวลาปัจจุบัน',
-            duration:        'ระยะเวลา',
-            volume:          'ความดังเสียง',
-            mute:            'ปิดเสียง',
-            unmute:          'เปิดเสียง',
-            enableCaptions:  'เปิดใช้งานคำบรรยาย',
+            restart: 'รีสตาร์ท',
+            rewind: 'ย้อนกลับ {seektime} วินาที',
+            play: 'เล่น',
+            pause: 'หยุดชั่วคราว',
+            fastForward: 'ไปข้างหน้า {seektime} วินาที',
+            seek: 'ค้นหา',
+            seekLabel: '{currentTime} จาก {duration}',
+            played: 'เล่นแล้ว',
+            buffered: 'บัฟเฟอร์',
+            currentTime: 'เวลาปัจจุบัน',
+            duration: 'ระยะเวลา',
+            volume: 'ความดังเสียง',
+            mute: 'ปิดเสียง',
+            unmute: 'เปิดเสียง',
+            enableCaptions: 'เปิดใช้งานคำบรรยาย',
             disableCaptions: 'ปิดใช้งานคำบรรยาย',
-            download:        'ดาวน์โหลด',
+            download: 'ดาวน์โหลด',
             enterFullscreen: 'เข้าสู่โหมดเต็มหน้าจอ',
-            exitFullscreen:  'ออกจากโหมดเต็มหน้าจอ',
-            frameTitle:      'เครื่องเล่นสำหรับ {title}',
-            captions:        'คำบรรยาย',
-            settings:        'การตั้งค่า',
-            pip:             'PIP',
-            menuBack:        'กลับไปที่เมนูก่อนหน้า',
-            speed:           'ความเร็ว',
-            normal:          'ปกติ',
-            quality:         'คุณภาพ',
-            audioTrack:      'เลือกเสียงบรรยาย',
-            loop:            'ลูป',
-            start:           'เริ่มต้น',
-            end:             'จบ',
-            all:             'ทั้งหมด',
-            reset:           'รีเซ็ต',
-            disabled:        'ปิดใช้งาน',
-            enabled:         'เปิดใช้งาน',
-            advertisement:   'โฆษณา',
+            exitFullscreen: 'ออกจากโหมดเต็มหน้าจอ',
+            frameTitle: 'เครื่องเล่นสำหรับ {title}',
+            captions: 'คำบรรยาย',
+            settings: 'การตั้งค่า',
+            pip: 'PIP',
+            menuBack: 'กลับไปที่เมนูก่อนหน้า',
+            speed: 'ความเร็ว',
+            normal: 'ปกติ',
+            quality: 'คุณภาพ',
+            audioTrack: 'เลือกเสียงบรรยาย',
+            loop: 'ลูป',
+            start: 'เริ่มต้น',
+            end: 'จบ',
+            all: 'ทั้งหมด',
+            reset: 'รีเซ็ต',
+            disabled: 'ปิดใช้งาน',
+            enabled: 'เปิดใช้งาน',
+            advertisement: 'โฆษณา',
             qualityBadge: {
                 2160: '4K',
-                1440: 'HD',
-                1080: 'HD',
-                720:  'HD',
-                576:  'SD',
-                480:  'SD',
-            },
+                1440: '2K',
+                1080: 'Full HD',
+                720: 'HD',
+                576: 'SD',
+                480: 'SD'
+            }
         },
         thumbnail: { enabled: false }
     };
@@ -127,7 +185,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         if(player && player.elements && player.elements.captions) {
             player.elements.captions.dir = "auto";
         }
-        setPlayerStartingPosition(player);
+        setPlayerStartingPosition(player, source);
     }
 
     var isMp4 = source.toLowerCase().includes('.mp4') || source.toLowerCase().includes('.mkv');
@@ -136,43 +194,51 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (isHlsSupported) {
         var hlsConfig = {
             debug: false, abrEwmaDefaultEstimate: 5000000, minBufferLength: 20, autoStartLoad: true,
-            maxBufferSize: 100 * 1000 * 1000, maxMaxBufferLength: 120,
-            maxSeekHole: 3,          
-            nudgeMaxRetries: 10,     
-            nudgeOffset: 0.1
+            maxBufferSize: 100 * 1000 * 1000, maxMaxBufferLength: 120, maxSeekHole: 3, nudgeMaxRetries: 10, nudgeOffset: 0.1
         };
 
         hls = new Hls(hlsConfig);
         hls.loadSource(source);
         
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+            let initialLang = null;
+
             if (data.audioTracks && data.audioTracks.length) {
                 const languageOptions = Array.from(new Set(data.audioTracks.map(a => a.name)));
+                const savedLang = localStorage.getItem('my_player_audio_lang');
+                initialLang = (savedLang && languageOptions.includes(savedLang)) ? savedLang : languageOptions[0];
+
                 defaultOptions.audioTrack = {
-                    options: languageOptions,
-                    selected: languageOptions[0],
+                    options: languageOptions, selected: initialLang,
                     onChange: (e) => {
                         let index = hls.audioTracks.findLastIndex(x => x.name == e);
                         hls.audioTrack = index < 0 ? 0 : index;
+                        localStorage.setItem('my_player_audio_lang', e);
                     }
                 };
-                hls.audioTrack = 0;
             }
 
             var availableQualities = hls.levels.map(function (l) { var label = getLabel(l); l.label = label; return label; });
             availableQualities.unshift(-1);
             levelsInternal = hls.levels;
 
-            defaultOptions.quality = {
-                default: -1,
-                options: availableQualities,
-                forced: true,
-                onChange: function (e) { updateQuality(e); }
-            };
+            defaultOptions.quality = { default: -1, options: availableQualities, forced: true, onChange: function (e) { updateQuality(e); } };
             defaultOptions.i18n["qualityLabel"] = { "-1": "Auto" };
 
             player = new Plyr(video, defaultOptions);
             initPlayer();
+
+            function syncAudioTrack() {
+                if (initialLang && hls.audioTracks && hls.audioTracks.length) {
+                    let initialIndex = hls.audioTracks.findLastIndex(x => x.name == initialLang);
+                    if (initialIndex >= 0) { hls.audioTrack = initialIndex; }
+                }
+            }
+
+            syncAudioTrack();
+            player.on('ready', syncAudioTrack);
+            video.addEventListener('loadedmetadata', syncAudioTrack);
+            video.addEventListener('play', syncAudioTrack, { once: true });
         });
 
         hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
@@ -188,70 +254,42 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.hls = hls;
 
     } else {
-        // =========================================================================
-        // 🛠️ ฝั่งไฟล์เดี่ยว MP4 / MKV: อัปเดตสูตรลับโชว์ตัวเลขเดียวเดี่ยวๆ เนียนกริบ
-        // =========================================================================
         if (isMaintenanceMode) {
-            video.innerHTML = ''; 
-            video.removeAttribute('src');
+            video.innerHTML = ''; video.removeAttribute('src');
             var maintenanceSource = document.createElement("source");
-            maintenanceSource.src = source;
-            maintenanceSource.type = "video/mp4";
+            maintenanceSource.src = source; maintenanceSource.type = "video/mp4";
             video.appendChild(maintenanceSource);
         } else {
             var allSources = video.querySelectorAll("source");
-            
-            // 1. ถ้าเจอ 1 แท็กตามที่พี่เขียนบน HTML
             if (allSources.length === 1) {
                 var firstSource = allSources[0];
                 var userSize = parseInt(firstSource.getAttribute("size")) || 1080;
-                
                 var fakeSource = document.createElement("source");
-                fakeSource.src = source;
-                fakeSource.type = firstSource.type || "video/mp4";
-                fakeSource.setAttribute("size", "9999"); 
+                fakeSource.src = source; fakeSource.type = firstSource.type || "video/mp4"; fakeSource.setAttribute("size", "9999");
                 video.appendChild(fakeSource);
                 
                 if (!document.getElementById("plyr-single-quality-style")) {
-                    var style = document.createElement("style");
-                    style.id = "plyr-single-quality-style";
-                    style.innerHTML = "button[data-plyr='quality'][value='9999'] { display: none !important; }";
-                    document.head.appendChild(style);
+                    var style = document.createElement("style"); style.id = "plyr-single-quality-style";
+                    style.innerHTML = "button[data-plyr='quality'][value='9999'] { display: none !important; }"; document.head.appendChild(style);
                 }
-
-                defaultOptions.quality = {
-                    default: userSize,       
-                    options: [userSize, 9999] 
-                };
+                defaultOptions.quality = { default: userSize, options: [userSize, 9999] };
             } 
-            // 2. เผื่อบางหน้าเขียน src="..." ไว้ที่แท็ก <video> ตรงๆ ไม่มีแท็ก source
             else if (allSources.length === 0 && video.src) {
-                var srcAttr = video.src;
-                video.removeAttribute('src');
+                var srcAttr = video.src; video.removeAttribute('src');
                 var s1 = document.createElement("source"); s1.src = srcAttr; s1.type = "video/mp4"; s1.setAttribute("size", "1080");
                 var s2 = document.createElement("source"); s2.src = srcAttr; s2.type = "video/mp4"; s2.setAttribute("size", "9999");
                 video.appendChild(s1); video.appendChild(s2);
                 
                 if (!document.getElementById("plyr-single-quality-style")) {
-                    var style = document.createElement("style");
-                    style.id = "plyr-single-quality-style";
-                    style.innerHTML = "button[data-plyr='quality'][value='9999'] { display: none !important; }";
-                    document.head.appendChild(style);
+                    var style = document.createElement("style"); style.id = "plyr-single-quality-style";
+                    style.innerHTML = "button[data-plyr='quality'][value='9999'] { display: none !important; }"; document.head.appendChild(style);
                 }
-
-                defaultOptions.quality = {
-                    default: 1080,
-                    options: [1080, 9999]
-                };
+                defaultOptions.quality = { default: 1080, options: [1080, 9999] };
             } 
-            // 3. กรณีมีหลายแท็กอยู่แล้ว (เช่น พี่จงใจแยกไฟล์ 480, 720, 1080 จริงๆ) ให้รันปกติ
             else if (allSources.length > 1) {
                 var htmlQualities = Array.from(allSources).map(el => parseInt(el.getAttribute("size"))).filter(Boolean);
                 if (htmlQualities.length > 0) {
-                    defaultOptions.quality = {
-                        default: Math.max(...htmlQualities),
-                        options: htmlQualities
-                    };
+                    defaultOptions.quality = { default: Math.max(...htmlQualities), options: htmlQualities };
                 }
             }
         }
@@ -260,18 +298,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     function updateQuality(newQuality) {
-        if (newQuality === -1) {
-            window.hls.currentLevel = -1;
-        } else {
+        if (newQuality === -1) { window.hls.currentLevel = -1; } 
+        else {
             for (var level of levelsInternal) {
-                if (level.label === newQuality) {
-                    window.hls.currentLevel = hls.levels.indexOf(level);
-                    return;
-                }
+                if (level.label === newQuality) { window.hls.currentLevel = hls.levels.indexOf(level); return; }
             }
         }
     }
 });
+// [👆จุดสิ้นสุดของโค้ดชุดใหม่]
 
 
 
@@ -460,5 +495,6 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
 ถ้าอยากให้พื้นที่ลากเสียงกว้างขึ้น: เปลี่ยนเลข 0.7 เป็น 0.5 ในส่วนของ isRightSide
 
    ==========================================================  */
+
 
 
