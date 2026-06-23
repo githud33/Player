@@ -1,30 +1,21 @@
 // ==========================================
 // ✅แก้ไขสมบูรณ์แล้ว✔MP4-MKV-M3U8 (เวอร์ชันแก้ไขบั๊กจำไม่แม่นลิงก์ Token เปลี่ยน)แก้ไขสมบูรณ์แล้ว.js
-//  https://github.com/githud33/copy/blob/main/videoโค้ดหลักใช้งาน
+//  https://github.com/githud33/copy/blob/main/videoโค้ดหลักใช้งาน   
 // ==========================================
 
 var video_start_time = 0;
 
-// 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันรวมร่างอัจฉริยะ ล็อกเป้าตัวเปลี่ยนโหมดให้เห็นชัด ๆ)
+// 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันแก้ไขบั๊กไฟล์ MP4 โหลดความยาวไม่ทัน)  ตอนนี้ใช้ตัว👇👇(V02.เปรี่ยนส่วนหัวเรื่องการจำเวลาไว้ใช้สำหรับMP4.js)
 function setPlayerStartingPosition(player, sourceUrl) {
     if (!sourceUrl) return;
 
     // =========================================================================
     // 👇👇👇 👉👉👉 [ สวิตช์เปิด-ปิดระบบจำเวลาล่าสุด ] 👈👈👈 👇👇👇
     // =========================================================================
-    // 🔹 ตั้งค่าเป็น true  = เปิดระบบจำเวลาล่าสุด (ดูค้างไว้ตรงไหน กลับมาเล่นต่อตรงนั้น)
-    // 🔹 ตั้งค่าเป็น false = ปิดระบบจำเวลาล่าสุด (วิดีโอจะบังคับเริ่มใหม่จาก 0 ทุกครั้ง)
-    
-    var enableRememberTime = true; // 👈👈👈 🔥 พี่เปลี่ยนโหมดตรงคำนี้คำเดียวเลยครับ! 🔥
-    
-    // =========================================================================
-    // 👆👆👆 👉👉👉 [ ล็อกเป้าหมายตรงนี้เลยครับพี่ ] 👈👈👈 👆👆👆
+    var enableRememberTime = true; // 👈 เปิด-ปิดระบบตรงนี้เหมือนเดิมครับพี่
     // =========================================================================
 
     if (enableRememberTime) {
-        // ==========================================
-        //  [ชุดที่ 1: โหมดเปิดระบบจำเวลาล่าสุด] 
-        // ==========================================
         var cleanUrl = sourceUrl.split('?')[0].split('#')[0];
         var storageKey = 'plyr_last_time_' + cleanUrl; 
         
@@ -32,14 +23,42 @@ function setPlayerStartingPosition(player, sourceUrl) {
         var startTime = savedTime ? parseFloat(savedTime) : video_start_time;
 
         if (startTime > 0) {
-            player.on('ready', function () {
-                setTimeout(function() {
+            var isTimeApplied = false; // 🔒 ตัวแปรล็อก ป้องกันไม่ให้โค้ดทำงานซ้ำซ้อน
+
+// ฟังก์ชันสั่งข้ามเวลา (เวอร์ชันอัปเกรด: วนลูปเช็คความยาวไฟล์จนกว่าจะพร้อม)
+            function applyStartTime() {
+                if (isTimeApplied) return;
+
+                // ตรวจสอบว่าเครื่องเล่นดึงความยาวหนังมาได้หรือยัง
+                if (player.duration && player.duration > 0) {
+                    isTimeApplied = true; // ล็อกระบบทันทีเมื่อได้ค่าความยาวที่ถูกต้อง เพื่อป้องกันการวนลูปซ้ำซ้อน
+                    
                     if (startTime <= player.duration) {
                         player.currentTime = startTime;
-                        console.log('🤖 [นายช่าง] ดึงเวลาจากลิงก์หลัก พาพี่กลับมานาทีที่: ' + startTime);
+                        console.log('🤖 [นายช่าง] พาพี่กลับมาเล่นต่อที่นาที: ' + startTime + ' วินาที');
                     }
-                }, 300); // หน่วงเวลา 0.3 วินาที เพื่อให้ตัวเล่นนิ่งพร้อมรับค่าเวลาใหม่
+                } else {
+                    // 🔥 ทีเด็ดอยู่ตรงนี้ครับพี่: ถ้าค่าความยาวหนังยังไม่มา (เป็น NaN หรือ 0) 
+                    // ให้สั่งรออีก 200 มิลลิวินาที แล้วกลับมาเช็คใหม่จนกว่าจะสำเร็จ!
+                    setTimeout(applyStartTime, 200);
+                }
+            }
+
+            // จังหวะที่ 1: ดักรอตอนเครื่องเล่นพร้อมทำงาน (ดีสำหรับ HLS) : ดักรอตอนเครื่องเล่นพร้อมทำงาน (ปรับเป็น 0 เพื่อความไวแสง)
+            player.on('ready', function () {
+                setTimeout(applyStartTime, 0); // 👈 สั่งให้ยืนรอเฉย ๆ 0.3 วินาทีค่อยเริ่มเช็ค // 👈 ปรับจาก 300 เป็น 0 ใด้ สามารถปรับเลข 300 ให้เหลือ 0 หรือ 50 ได้
             });
+
+            // จังหวะที่ 2: ดักรอตอนแท็กวิดีโอโหลดข้อมูลโครงสร้างไฟล์เสร็จ (หัวใจสำคัญแก้บั๊กไฟล์ MP4!)
+            var videoEl = document.querySelector("video");
+            if (videoEl) {
+                videoEl.addEventListener('loadedmetadata', function() {
+                    setTimeout(applyStartTime, 0); // 👈 สั่งให้ยืนรอเฉย ๆ 0.3 วินาทีค่อยเริ่มเช็ค // 👈 ปรับจาก 300 เป็น 0 ใด้ สามารถปรับเลข 300 ให้เหลือ 0 หรือ 50 ได้
+                });
+                videoEl.addEventListener('canplay', function() {
+                    setTimeout(applyStartTime, 0); // 👈 สั่งให้ยืนรอเฉย ๆ 0.3 วินาทีค่อยเริ่มเช็ค // 👈 ปรับจาก 300 เป็น 0 ใด้ สามารถปรับเลข 300 ให้เหลือ 0 หรือ 50 ได้
+                });
+            }
         }
 
         // ฟังก์ชันส่วนกลางสำหรับสั่งบันทึกเวลาปัจจุบัน
@@ -49,16 +68,14 @@ function setPlayerStartingPosition(player, sourceUrl) {
             }
         }
 
-        // เซฟเวลาทุกจังหวะสำคัญ (ตอนเวลาเปลี่ยน, ตอนกดหยุด, ตอนกำลังเลื่อนแถวเวลา)
+        // เซฟเวลาทุกจังหวะสำคัญเหมือนเดิม
         player.on('timeupdate', saveCurrentTime);
         player.on('pause', saveCurrentTime);
         player.on('seeking', saveCurrentTime);
-
-        // ดักจับตอนที่พี่กำลังจะกดปุ่มเปลี่ยนตอน ให้รีบเซฟเวลาลงกล่องทันทีกันเหนียว
         window.addEventListener('beforeunload', saveCurrentTime);
         window.addEventListener('pagehide', saveCurrentTime);
 
-        // เช็คให้ชัวร์ว่าดูจบเรื่องจริง ๆ (เหลืออีกไม่ถึง 15 วินาทีจะจบ) ถึงจะยอมให้ลบความจำทิ้ง
+        // เช็คตอนจบเรื่องเพื่อล้างประวัติ
         player.on('ended', function () {
             if (player.duration && player.currentTime >= (player.duration - 15)) {
                 localStorage.removeItem(storageKey);
@@ -67,9 +84,7 @@ function setPlayerStartingPosition(player, sourceUrl) {
         });
 
     } else {
-        // ==========================================
-        //  [ชุดที่ 2: โหมดปิดระบบจำเวลา (เริ่มใหม่จาก 0)]
-        // ==========================================
+        // โหมดปิดระบบจำเวลา (เริ่มใหม่จาก 0)
         if (video_start_time > 0) {
             player.on('ready', function () {
                 setTimeout(function() {
@@ -79,9 +94,8 @@ function setPlayerStartingPosition(player, sourceUrl) {
                 }, 300);
             });
         }
-        console.log('🤖 [นายช่าง] ปิดระบบจำเวลาเรียบร้อย (วิดีโอเริ่มเล่นใหม่จาก 0 ทุกครั้ง)');
     }
-}   
+} 
 
 function IsMobile() {
     var check = false;
