@@ -4,6 +4,8 @@
 // เหมือนกับตัว เครื่องเล่น-js-m3u8.js ที่ใช้อยู่ ไว้สำหรับให้ดาวน์โหลด MP4 หรือเปิด MP4
 // ==========================================
 
+var video_start_time = 0;
+
 // 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันแก้ไขบั๊กไฟล์ MP4 โหลดความยาวไม่ทัน)
 function setPlayerStartingPosition(player, sourceUrl) {
     if (!sourceUrl) return;
@@ -89,48 +91,7 @@ function setPlayerStartingPosition(player, sourceUrl) {
             });
         }
     }
-}
-
-        // ฟังก์ชันส่วนกลางสำหรับสั่งบันทึกเวลาปัจจุบัน
-        function saveCurrentTime() {
-            if (player && player.currentTime > 5) { 
-                localStorage.setItem(storageKey, player.currentTime);
-            }
-        }
-
-        // เซฟเวลาทุกจังหวะสำคัญ (ตอนเวลาเปลี่ยน, ตอนกดหยุด, ตอนกำลังเลื่อนแถวเวลา)
-        player.on('timeupdate', saveCurrentTime);
-        player.on('pause', saveCurrentTime);
-        player.on('seeking', saveCurrentTime);
-
-        // ดักจับตอนที่พี่กำลังจะกดปุ่มเปลี่ยนตอน ให้รีบเซฟเวลาลงกล่องทันทีกันเหนียว
-        window.addEventListener('beforeunload', saveCurrentTime);
-        window.addEventListener('pagehide', saveCurrentTime);
-
-        // เช็คให้ชัวร์ว่าดูจบเรื่องจริง ๆ (เหลืออีกไม่ถึง 15 วินาทีจะจบ) ถึงจะยอมให้ลบความจำทิ้ง
-        player.on('ended', function () {
-            if (player.duration && player.currentTime >= (player.duration - 15)) {
-                localStorage.removeItem(storageKey);
-                console.log('🤖 [นายช่าง] ดูจนจบเรื่องจริง ๆ ล้างกล่องความจำเรียบร้อยครับ');
-            }
-        });
-
-    } else {
-        // ==========================================
-        //  [ชุดที่ 2: โหมดปิดระบบจำเวลา (เริ่มใหม่จาก 0)]
-        // ==========================================
-        if (video_start_time > 0) {
-            player.on('ready', function () {
-                setTimeout(function() {
-                    if (video_start_time <= player.duration) {
-                        player.currentTime = video_start_time;
-                    }
-                }, 300);
-            });
-        }
-        console.log('🤖 [นายช่าง] ปิดระบบจำเวลาเรียบร้อย (วิดีโอเริ่มเล่นใหม่จาก 0 ทุกครั้ง)');
-    }
-}   
+} 
 
 function IsMobile() {
     var check = false;
