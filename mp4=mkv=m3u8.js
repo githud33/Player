@@ -4,28 +4,17 @@
 // เหมือนกับตัว เครื่องเล่น-js-m3u8.js ที่ใช้อยู่ ไว้สำหรับให้ดาวน์โหลด MP4 หรือเปิด MP4
 // ==========================================
 
-var video_start_time = 0;
-
-// 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันรวมร่างอัจฉริยะ ล็อกเป้าตัวเปลี่ยนโหมดให้เห็นชัด ๆ)
+// 💾 ฟังก์ชันระบบจัดการเวลาเล่น (เวอร์ชันแก้ไขบั๊กไฟล์ MP4 โหลดความยาวไม่ทัน)
 function setPlayerStartingPosition(player, sourceUrl) {
     if (!sourceUrl) return;
 
     // =========================================================================
     // 👇👇👇 👉👉👉 [ สวิตช์เปิด-ปิดระบบจำเวลาล่าสุด ] 👈👈👈 👇👇👇
     // =========================================================================
-    // 🔹 ตั้งค่าเป็น true  = เปิดระบบจำเวลาล่าสุด (ดูค้างไว้ตรงไหน กลับมาเล่นต่อตรงนั้น)
-    // 🔹 ตั้งค่าเป็น false = ปิดระบบจำเวลาล่าสุด (วิดีโอจะบังคับเริ่มใหม่จาก 0 ทุกครั้ง)
-    
-    var enableRememberTime = true; // 👈👈👈 🔥 พี่เปลี่ยนโหมดตรงคำนี้คำเดียวเลยครับ! 🔥
-    
-    // =========================================================================
-    // 👆👆👆 👉👉👉 [ ล็อกเป้าหมายตรงนี้เลยครับพี่ ] 👈👈👈 👆👆👆
+    var enableRememberTime = true; // 👈 เปิด-ปิดระบบตรงนี้เหมือนเดิมครับพี่
     // =========================================================================
 
     if (enableRememberTime) {
-        // ==========================================
-        //  [ชุดที่ 1: โหมดเปิดระบบจำเวลาล่าสุด] 
-        // ==========================================
         var cleanUrl = sourceUrl.split('?')[0].split('#')[0];
         var storageKey = 'plyr_last_time_' + cleanUrl; 
         
@@ -33,15 +22,74 @@ function setPlayerStartingPosition(player, sourceUrl) {
         var startTime = savedTime ? parseFloat(savedTime) : video_start_time;
 
         if (startTime > 0) {
-            player.on('ready', function () {
-                setTimeout(function() {
+            var isTimeApplied = false; // 🔒 ตัวแปรล็อก ป้องกันไม่ให้โค้ดทำงานซ้ำซ้อน
+
+            // ฟังก์ชันสั่งข้ามเวลา (จะทำงานเมื่อวิดีโอมีความยาวพร้อมแล้วเท่านั้น)
+            function applyStartTime() {
+                if (isTimeApplied) return;
+
+                // ตรวจสอบว่าเครื่องเล่นดึงความยาวหนังมาได้หรือยัง (ต้องไม่เป็น NaN และมากกว่า 0)
+                if (player.duration && player.duration > 0) {
                     if (startTime <= player.duration) {
                         player.currentTime = startTime;
-                        console.log('🤖 [นายช่าง] ดึงเวลาจากลิงก์หลัก พาพี่กลับมานาทีที่: ' + startTime);
+                        isTimeApplied = true; // ล็อกระบบว่าข้ามเวลาสำเร็จแล้ว
+                        console.log('🤖 [นายช่าง] พาพี่กลับมาเล่นต่อที่นาที: ' + startTime + ' วินาที');
                     }
-                }, 300); // หน่วงเวลา 0.3 วินาที เพื่อให้ตัวเล่นนิ่งพร้อมรับค่าเวลาใหม่
+                }
+            }
+
+            // จังหวะที่ 1: ดักรอตอนเครื่องเล่นพร้อมทำงาน (ดีสำหรับ HLS)
+            player.on('ready', function () {
+                setTimeout(applyStartTime, 300);
+            });
+
+            // จังหวะที่ 2: ดักรอตอนแท็กวิดีโอโหลดข้อมูลโครงสร้างไฟล์เสร็จ (หัวใจสำคัญแก้บั๊กไฟล์ MP4!)
+            var videoEl = document.querySelector("video");
+            if (videoEl) {
+                videoEl.addEventListener('loadedmetadata', function() {
+                    setTimeout(applyStartTime, 300);
+                });
+                videoEl.addEventListener('canplay', function() {
+                    setTimeout(applyStartTime, 300);
+                });
+            }
+        }
+
+        // ฟังก์ชันส่วนกลางสำหรับสั่งบันทึกเวลาปัจจุบัน
+        function saveCurrentTime() {
+            if (player && player.currentTime > 5) { 
+                localStorage.setItem(storageKey, player.currentTime);
+            }
+        }
+
+        // เซฟเวลาทุกจังหวะสำคัญเหมือนเดิม
+        player.on('timeupdate', saveCurrentTime);
+        player.on('pause', saveCurrentTime);
+        player.on('seeking', saveCurrentTime);
+        window.addEventListener('beforeunload', saveCurrentTime);
+        window.addEventListener('pagehide', saveCurrentTime);
+
+        // เช็คตอนจบเรื่องเพื่อล้างประวัติ
+        player.on('ended', function () {
+            if (player.duration && player.currentTime >= (player.duration - 15)) {
+                localStorage.removeItem(storageKey);
+                console.log('🤖 [นายช่าง] ดูจนจบเรื่องจริง ๆ ล้างกล่องความจำเรียบร้อยครับ');
+            }
+        });
+
+    } else {
+        // โหมดปิดระบบจำเวลา (เริ่มใหม่จาก 0)
+        if (video_start_time > 0) {
+            player.on('ready', function () {
+                setTimeout(function() {
+                    if (video_start_time <= player.duration) {
+                        player.currentTime = video_start_time;
+                    }
+                }, 300);
             });
         }
+    }
+}
 
         // ฟังก์ชันส่วนกลางสำหรับสั่งบันทึกเวลาปัจจุบัน
         function saveCurrentTime() {
