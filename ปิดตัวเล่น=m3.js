@@ -9,3 +9,4 @@ document.querySelectorAll("#m3, #mk, #ru, #tx").forEach(function(mediaSource) {
 if (video) {
     video.load();
    // video.play(); // สั่งให้เล่นวิดีโอตัวที่เหลืออยู่ (id="mp") ทันที ***ถ้าเปิดแท็กตัวนี้ เริ่มเล่นทันทีโดยที่คนดูไม่ต้องกดปุ่ม Play สามารถเพิ่มคำสั่ง .play()
+}
