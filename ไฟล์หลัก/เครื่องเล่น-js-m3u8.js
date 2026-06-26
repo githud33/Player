@@ -1,4 +1,5 @@
 // ==========================================
+//  แก้ 26 มิถุนายน 69
 // ✅แก้ไขสมบูรณ์แล้ว✔MP4-MKV-M3U8 (เวอร์ชันแก้ไขบั๊กจำไม่แม่นลิงก์ Token เปลี่ยน)แก้ไขสมบูรณ์แล้ว.js
 //  https://github.com/githud33/copy/blob/main/videoโค้ดหลักใช้งาน   
 // ==========================================
@@ -254,12 +255,18 @@ document.addEventListener("DOMContentLoaded", async function () {
             video.addEventListener('play', syncAudioTrack, { once: true });
         });
 
-        hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
+hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
             var span = document.querySelector(".plyr__controls [data-plyr='quality'][value='-1'] span");
-            if (span != null && hls.autoLevelEnabled) {
-                var level = hls.levels[data.level];
-                var label = getLabel(level);
-                span.innerHTML = 'Auto (' + label + 'p)';
+            if (span != null) {
+                if (hls.autoLevelEnabled) {
+                    // ถ้าเปิด Auto อยู่ ให้โชว์ความละเอียดปัจจุบันที่ระบบเลือกให้
+                    var level = hls.levels[data.level];
+                    var label = getLabel(level);
+                    span.innerHTML = 'Auto (' + label + 'p)';
+                } else {
+                    // 🔄 ทริคเด็ด: ถ้าคนดูเลือกปรับเอง (ไม่ใช่ Auto) ให้ล้างตัวเลขในวงเล็บทิ้ง เหลือแค่คำว่า "Auto" เฉย ๆ
+                    span.innerHTML = 'Auto';
+                }
             }
         });
 
@@ -310,12 +317,23 @@ document.addEventListener("DOMContentLoaded", async function () {
         initPlayer();
     }
 
-    function updateQuality(newQuality) {
-        if (newQuality === -1) { window.hls.currentLevel = -1; } 
+function updateQuality(newQuality) {
+        if (newQuality === -1) { 
+            window.hls.currentLevel = -1; 
+        } 
         else {
             for (var level of levelsInternal) {
-                if (level.label === newQuality) { window.hls.currentLevel = hls.levels.indexOf(level); return; }
+                if (level.label === newQuality) { 
+                    window.hls.currentLevel = hls.levels.indexOf(level); 
+                    break; 
+                }
             }
+        }
+        
+        // 🎯 เคลียร์ตัวเลขท้ายเมนู Auto ทันทีที่กดเลือกความละเอียดแบบกำหนดเอง (ช่วยให้ UI อัปเดตไวขึ้น)
+        var span = document.querySelector(".plyr__controls [data-plyr='quality'][value='-1'] span");
+        if (span != null && !window.hls.autoLevelEnabled) {
+            span.innerHTML = 'Auto';
         }
     }
 });
