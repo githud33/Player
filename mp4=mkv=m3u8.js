@@ -142,7 +142,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         controls: [
             'play-large', 'play', 'rewind', 'fast-forward', 'progress', 'current-time', 'duration', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
         ],
-        settings: ['captions', 'quality', 'speed', 'loop', 'audioTrack'],
+        settings: ['quality', 'audioTrack', 'captions', 'speed', 'loop'],
+       // settings: ['captions', 'quality', 'speed', 'loop', 'audioTrack'],
         speed: { selected: 1, options: [0.5,0.75,1,1.25,1.5,1.75,2,4] },
        // speed: { selected: 1, options: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4] },
         
