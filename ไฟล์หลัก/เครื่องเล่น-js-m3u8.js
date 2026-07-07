@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             speed: 'ความเร็ว',
             normal: 'ปกติ',
             quality: 'คุณภาพ',
-            audioTrack: 'เลือกเสียงบรรยาย',
+            audioTrack: 'เสียงบรรยาย',
             loop: 'ลูป',
             start: 'เริ่มต้น',
             end: 'จบ',
