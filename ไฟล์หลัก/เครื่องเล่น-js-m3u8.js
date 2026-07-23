@@ -533,6 +533,7 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
 // =============================================================================
 // =============================================================================
 //  👁‍🗨ลองใช้โค้ดชุดใหม่
+//  📄doogoodseries🟡
 //  💬 ส่วนที่ 2: สำหรับซับไตเติล (<track>) เท่านั้น ชิ้นส่วนนี้คุมคลังซับไตเติล ดึงไฟล์ .vtt
 
 (function() {
@@ -560,8 +561,37 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
     });
 })();
 
+//  📄doogoodseries1🟠
+//  💬 ส่วนที่ 2: สำหรับซับไตเติล (<track>) เท่านั้น ชิ้นส่วนนี้คุมคลังซับไตเติล ดึงไฟล์ .vtt
+
+(function() {
+    var config = {
+        old: "https://raw.githubusercontent.com/doogoodseries1/subtitle/refs/heads/main/",
+        new: "https://cdn.jsdelivr.net/gh/doogoodseries1/subtitle@main/"
+    };
+
+    function convertSubtitle(url) {
+        if (!url) return url;
+        var trimmed = url.trim();
+        // กรณีลิงก์สั้น -> เติมโดเมน jsDelivr
+        if (!trimmed.startsWith('http')) return config.new + trimmed;
+        // กรณีลิงก์ยาว GitHub Raw -> สับร่างเปลี่ยนเป็น jsDelivr
+        if (trimmed.includes(config.old)) return trimmed.replace(config.old, config.new);
+        return trimmed;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // 💬 จัดการแท็กซับไตเติล <track>
+        document.querySelectorAll('track').forEach(function(track) {
+            var s = track.getAttribute('src');
+            if (s) track.setAttribute('src', convertSubtitle(s));
+        });
+    });
+})();
+
 
 // =============================================================================
+//   📺doogoodseries🟡
 //   🎬 ส่วนที่ 3: สำหรับไฟล์วิดีโอ (<source>) เท่านั้น (เน้นปลอดภัย วิดีโอไม่ค้าง) ชิ้นส่วนนี้คุมเฉพาะตัวไฟล์หนัง .m3u8 หรือ .mp4
 
 (function() {
@@ -592,6 +622,36 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
     });
 })();
 
+//   📺doogoodseries1🟠
+//   🎬 ส่วนที่ 3: สำหรับไฟล์วิดีโอ (<source>) เท่านั้น (เน้นปลอดภัย วิดีโอไม่ค้าง) ชิ้นส่วนนี้คุมเฉพาะตัวไฟล์หนัง .m3u8 หรือ .mp4
+
+(function() {
+    var config = {
+        old: "https://raw.githubusercontent.com/doogoodseries1/Series/refs/heads/main/",
+        new: "https://cdn.jsdelivr.net/gh/doogoodseries1/Series@main/"
+    };
+
+    function convertVideo(url) {
+        if (!url) return url;
+        var trimmed = url.trim();
+        // รองรับเฉพาะลิงก์ยาว GitHub Raw -> สับร่างเปลี่ยนเป็น jsDelivr (ลิงก์สั้นจะถูกข้ามไป)
+        if (trimmed.includes(config.old)) return trimmed.replace(config.old, config.new);
+        return trimmed;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // 🎬 จัดการสับเปลี่ยนลิงก์ยาวในแท็ก <source>
+        document.querySelectorAll('source').forEach(function(source) {
+            var s = source.getAttribute('src');
+            if (s) {
+                var newSrc = convertVideo(s);
+                if (s !== newSrc) {
+                    source.setAttribute('src', newSrc);
+                }
+            }
+        });
+    });
+})();
 
 // =============================================================================
 //  📷 โค้ดชุดที่ 1: จัดการเฉพาะแท็กรูปภาพทั่วไป (<img>) เท่านั้น
