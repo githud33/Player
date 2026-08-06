@@ -696,7 +696,7 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
 })();
 */
 
-// =============================================================================
+// ===============================================================================
 //  🖼️ โค้ดชุดที่ 2: จัดการเฉพาะหน้าปกวิดีโอ (poster / data-poster) เท่านั้น
 (function() {
     // ⚙️ ตั้งค่าคลังโดเมน (เก่า 2 ชุด -> ใหม่ 1 ชุด)
@@ -704,7 +704,7 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
         githubRaw: "https://raw.githubusercontent.com/mey2015/image/main/uploads/",
         githubIo: "https://mey2015.github.io/image/uploads/",
         jsdelivr: "https://cdn.jsdelivr.net/gh/mey2015/image@main/uploads/"
-     //   jsdelivr: "https://mey2015.github.io/image/uploads/"        
+     //  jsdelivr: "https://mey2015.github.io/image/uploads/"        
     };
 
     function convertPoster(url) {
