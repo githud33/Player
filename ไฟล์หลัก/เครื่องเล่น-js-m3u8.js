@@ -703,7 +703,8 @@ rect.height * 0.8: ผมตั้งไว้ว่า พื้นที่ล
     var config = {
         githubRaw: "https://raw.githubusercontent.com/mey2015/image/main/uploads/",
         githubIo: "https://mey2015.github.io/image/uploads/",
-        jsdelivr: "https://cdn.jsdelivr.net/gh/mey2015/image@main/uploads/"
+       //👉 jsdelivr: "https://cdn.jsdelivr.net/gh/mey2015/image@main/uploads/"
+        jsdelivr: "https://cdn.jsdelivr.net/gh/mey2015/image@main/uploads/คมวสันต์ซ่อนรักXXX.webp#https://cdn.jsdelivr.net/gh/mey2015/image@main/uploads/"
      //  jsdelivr: "https://mey2015.github.io/image/uploads/"        
     };
 
