@@ -308,12 +308,39 @@ hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
                 }
                 defaultOptions.quality = { default: 1080, options: [1080, 9999] };
             } 
-            else if (allSources.length > 1) {
+          /* =======================================
+          // ปิดใช้งาน ใช้คำสั่งล็อค ความคมชัด 🚀ใช่ส่วนล่างแทน
+          else if (allSources.length > 1) {
                 var htmlQualities = Array.from(allSources).map(el => parseInt(el.getAttribute("size"))).filter(Boolean);
                 if (htmlQualities.length > 0) {
                     defaultOptions.quality = { default: Math.max(...htmlQualities), options: htmlQualities };
                 }
+            }  
+            ===================================== */
+          
+          // 🚀คำสั่งล็อค ความคมชัด👇
+          else if (allSources.length > 1) {
+                var htmlQualities = Array.from(allSources).map(el => parseInt(el.getAttribute("size"))).filter(Boolean);
+                
+                if (htmlQualities.length > 0) {
+                    // 1. ค้นหา source ที่ถูกตั้งค่า default="true" หรือ defaul="true"
+                    var defaultSource = Array.from(allSources).find(el => {
+                        var isDef = el.getAttribute("default") || el.getAttribute("defaul");
+                        return isDef && isDef.toLowerCase() === "true";
+                    });
+
+                    // 2. ดึงค่า size จาก defaultSource ถ้าไม่มีให้ดึงความละเอียดสูงสุด (Math.max)
+                    var preferredQuality = defaultSource 
+                        ? (parseInt(defaultSource.getAttribute("size")) || Math.max(...htmlQualities))
+                        : Math.max(...htmlQualities);
+
+                    defaultOptions.quality = { 
+                        default: preferredQuality, 
+                        options: htmlQualities 
+                    };
+                }
             }
+          /* 👆============================👆*/       
         }
         player = new Plyr(video, defaultOptions);
         initPlayer();
