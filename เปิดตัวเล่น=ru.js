@@ -1,7 +1,7 @@
 var video = document.getElementById("main-video");
 
 // วิ่งไปหาแท็กที่มี id="m3" หรือ id="mk" หรือ id="tx" ทั้งหมดมาลูปเพื่อลบออก
-document.querySelectorAll("#mp, #m3, #mk, #tx").forEach(function(mediaSource) {
+document.querySelectorAll(".mp, #mp, #m3, #mk, #tx").forEach(function(mediaSource) {
     mediaSource.remove();
 });
 
