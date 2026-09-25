@@ -1,7 +1,7 @@
 var video = document.getElementById("main-video");
 
-// วิ่งไปหาแท็กที่มี id="m3" หรือ id="mk" หรือ id="tx" ทั้งหมดมาลูปเพื่อลบออก
-document.querySelectorAll("#mp, #mk, #ru, #tx").forEach(function(mediaSource) {
+// วิ่งไปหาแท็กที่มี id="m3" หรือ id="mk" หรือ id="tx" class="mp" ทั้งหมดมาลูปเพื่อลบออก
+document.querySelectorAll(".mp, #mp, #mk, #ru, #tx").forEach(function(mediaSource) {
     mediaSource.remove();
 });
 
