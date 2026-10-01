@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (isHlsSupported) {
         var hlsConfig = {
-            debug: false, abrEwmaDefaultEstimate: 5000000, minBufferLength: 20, autoStartLoad: true,
+            debug: false, abrEwmaDefaultEstimate: 10000000, minBufferLength: 20, autoStartLoad: true,
             maxBufferSize: 100 * 1000 * 1000, maxMaxBufferLength: 120, maxSeekHole: 3, nudgeMaxRetries: 10, nudgeOffset: 0.1
         };
 
