@@ -191,7 +191,7 @@ body {
       padding-top: 5px; /*******ปรับความกว้างกล่องด้านบน 4px*********/
       padding-bottom: 5px; /*******ปรับความกว้างกล่องด้านล่าง 4px*********/
      /* animation: run-left-and-fader 50s linear 20 forwards; /* 28s ความเร็วของเดิม 12s ความเร็ว 2s ต่อรอบ, วน 10 รอบ, คงสถานะสุดท้าย  (ตัวเก่า) */
-      animation: run-left-and-fader 60s linear 20 forwards; /* 28s ความเร็วของเดิม 12s ความเร็ว 2s ต่อรอบ, วน 10 รอบ, คงสถานะสุดท้าย (เปลี่ยนจาก 50s เป็น 60s ข้อ ความยาวขึ้น ปรับให้เดินช้าลง) */
+      animation: run-left-and-fader 70s linear 15 forwards; /* 28s ความเร็วของเดิม 12s ความเร็ว 2s ต่อรอบ, วน 10 รอบ, คงสถานะสุดท้าย (เปลี่ยนจาก 50s เป็น 70s ข้อ ความยาวขึ้น ปรับให้เดินช้าลง) */
       white-space: nowrap;
       overflow: hidden;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
